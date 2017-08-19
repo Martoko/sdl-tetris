@@ -8,17 +8,19 @@
 namespace SDL {
 
     class Window {
+    protected:
         SDL_Window *sdl_window;
-        Surface *screen_surface;
+        SDL_Renderer *sdl_renderer;
+
 
     public:
         Window(std::string name = "SDL Window", int width = 600, int height = 400);
 
-        Surface *getSurface();
-
         void renderToScreen();
 
         virtual ~Window();
+
+        virtual void draw();
     };
 
 }

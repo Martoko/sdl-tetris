@@ -6,34 +6,35 @@ using namespace SDL;
 Window::Window(std::string name, int width, int height) {
     sdl_window = SDL_CreateWindow(name.c_str(), SDL_WINDOWPOS_UNDEFINED,
                                   SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_SHOWN);
-
     if (sdl_window == NULL) {
         throw new SdlError();
     }
 
-    SDL_Surface *sdl_surface = SDL_GetWindowSurface(sdl_window);
-
-    if (sdl_surface == NULL) {
+    const int FIRST_AVAILABLE_RENDERING_DRIVER = -1;
+    sdl_renderer = SDL_CreateRenderer(sdl_window, FIRST_AVAILABLE_RENDERING_DRIVER,
+                                      SDL_RENDERER_ACCELERATED);
+    if (sdl_renderer == NULL) {
         throw new SdlError();
     }
 
-    screen_surface = new Surface(sdl_surface);
 }
 
 Window::~Window() {
-    delete screen_surface;
+    SDL_DestroyRenderer(sdl_renderer);
     SDL_DestroyWindow(sdl_window);
 }
 
-Surface *Window::getSurface() {
-    return screen_surface;
+void Window::renderToScreen() {
+    // TODO: Error handling
+    SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+    SDL_RenderClear(sdl_renderer);
+
+    draw();
+
+    SDL_RenderPresent(sdl_renderer);
 }
 
-void Window::renderToScreen() {
-    int result = SDL_UpdateWindowSurface(sdl_window);
-    const int SUCCESS = 0;
-
-    if (result != SUCCESS) {
-        throw new SdlError();
-    }
+void Window::draw() {
+    // TODO: Stuff
+    //SDL_RenderCopy( gRenderer, gTexture, NULL, NULL );
 }

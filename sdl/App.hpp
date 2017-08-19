@@ -8,6 +8,14 @@ namespace SDL {
         App();
 
         virtual ~App();
+
+    private:
+
+        void initSdl();
+
+        void setTextureFilteringToLinear();
+
+        void initSdlImage();
     };
 
 }

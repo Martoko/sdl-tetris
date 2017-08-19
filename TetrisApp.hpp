@@ -3,8 +3,7 @@
 
 #include "sdl/App.hpp"
 
-class TetrisApp : SDL::App {
-
+class TetrisApp : public SDL::App {
 public:
     void run();
 };

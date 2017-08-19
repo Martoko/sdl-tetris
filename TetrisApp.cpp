@@ -1,14 +1,14 @@
 #include "TetrisApp.hpp"
 #include "sdl/Window.hpp"
 #include "sdl/Delay.hpp"
+#include "TetrisWindow.hpp"
 
 void TetrisApp::run() {
-    SDL::Window window("Tetris");
-    SDL::Surface *surface = window.getSurface();
+    TetrisWindow window("Tetris", 182 + 4, 398 + 4);
 
-    surface->clear();
+    while (!window.wants_quit) {
+        window.update();
 
-    window.renderToScreen();
-
-    SDL::delay(2000);
+        window.renderToScreen();
+    }
 }

@@ -1,10 +1,7 @@
-#include <iostream>
-#include <SDL.h>
 #include "TetrisApp.hpp"
 
-int main() {
-    std::cout << "Hello, World!" << std::endl;
 
+int main(int argc, char *argv[]) {
     TetrisApp app;
     app.run();
 
