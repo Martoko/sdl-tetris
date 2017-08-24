@@ -20,9 +20,11 @@ class TetrisApp : public SDL::App {
     bool paused = true;
     // Last time lines were cleared, how many?
     bool last_line_clear_was_tetris = false;
+    int lines_left_till_levelup = 0;
     int score = 0;
     bool already_switched_hold = false;
     bool show_instructions = true;
+    int level = 1;
 
     TetrominoBag bag;
 
@@ -55,8 +57,6 @@ public:
     void draw();
 
     virtual ~TetrisApp();
-
-    void reshuffleBag();
 
     Tetromino *newTetrominoFromBag();
 

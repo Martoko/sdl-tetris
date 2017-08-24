@@ -40,7 +40,11 @@ void TetrisApp::step() {
         return;
     }
 
-    if (gravity_timer.getTicks() > gravity_delay && current_tetromino != nullptr) {
+    int gravity_delay_level_adjusted = (gravity_delay - 430 * level / 20);
+    if (gravity_delay_level_adjusted < 50) {
+        gravity_delay_level_adjusted = 50;
+    }
+    if (gravity_timer.getTicks() > gravity_delay_level_adjusted && current_tetromino != nullptr) {
         bool did_move = tryApplyGravity();
 
         if (did_move && gravity_delay == GRAVITY_FAST_DELAY) {
@@ -61,6 +65,7 @@ void TetrisApp::draw() {
     }
 
     window.drawScoreValue(score);
+    window.drawLevelValue(level);
 
     if (!paused || game_over) {
         window.drawBoard(board);
@@ -123,10 +128,8 @@ void TetrisApp::propagateEvents() {
 
 void TetrisApp::onKeyDown(SDL_KeyboardEvent event) {
     if (game_over) {
-        switch (event.keysym.sym) {
-            case SDLK_r:
-                restartGame();
-                break;
+        if (event.keysym.sym == SDLK_r) {
+            restartGame();
         }
 
         return;
@@ -292,6 +295,9 @@ void TetrisApp::rotate(Tetromino *tetromino, int amount) {
     if (tryRotate(tetromino, amount)) {
         return;
     }
+
+    // Reset movement to initial state
+    tetromino->move(2, 0);
 }
 
 bool TetrisApp::tryRotate(Tetromino *tetromino, int amount) {
@@ -360,17 +366,28 @@ void TetrisApp::clearLines() {
             800
     };
 
-    score += line_clear_scores[lines_cleared];
+    score += line_clear_scores[lines_cleared] * level;
 
     if (lines_cleared == 4) {
         if (last_line_clear_was_tetris) {
-            score += line_clear_scores[4] / 2;
+            score += line_clear_scores[4] / 2 * level;
         }
 
         last_line_clear_was_tetris = true;
 
     } else if (lines_cleared != 0) {
         last_line_clear_was_tetris = false;
+    }
+
+    lines_left_till_levelup -= lines_cleared;
+
+    if (lines_left_till_levelup < 0) {
+        lines_left_till_levelup += 10;
+        level++;
+
+        if (level > 20) {
+            level = 20;
+        }
     }
 }
 
@@ -393,6 +410,8 @@ void TetrisApp::restartGame() {
     }
 
     score = 0;
+    level = 1;
+    lines_left_till_levelup = 10;
 
     bag.clear();
 

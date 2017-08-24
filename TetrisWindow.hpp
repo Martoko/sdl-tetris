@@ -28,6 +28,7 @@ class TetrisWindow : public SDL::Window {
     SDL::Texture *next_text_texture;
     SDL::Texture *hold_text_texture;
     SDL::Texture *pause_text_texture;
+    SDL::Texture *level_text_texture;
 
 public:
     TetrisWindow(std::string name);
@@ -61,6 +62,8 @@ public:
     void drawGameOver(int score);
 
     void drawInstructions();
+
+    void drawLevelValue(int level);
 };
 
 

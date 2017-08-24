@@ -22,6 +22,7 @@ TetrisWindow::TetrisWindow(std::string name) : Window(name, BOARD_WIDTH, BOARD_H
     next_text_texture = SDL::Texture::fromText(sdl_renderer, ubuntu_regular_20, "next");
     hold_text_texture = SDL::Texture::fromText(sdl_renderer, ubuntu_regular_20, "hold");
     score_text_texture = SDL::Texture::fromText(sdl_renderer, ubuntu_regular_20, "score");
+    level_text_texture = SDL::Texture::fromText(sdl_renderer, ubuntu_regular_20, "level");
     pause_text_texture = SDL::Texture::fromText(sdl_renderer, ubuntu_regular_44, "PAUSED",
                                                 {255, 255, 255});
     game_over_title_text = SDL::Texture::fromText(sdl_renderer, ubuntu_regular_44, "GAME OVER",
@@ -42,6 +43,7 @@ TetrisWindow::~TetrisWindow() {
     delete next_text_texture;
     delete hold_text_texture;
     delete score_text_texture;
+    delete level_text_texture;
     delete pause_text_texture;
     delete game_over_title_text;
     delete game_over_description_text;
@@ -137,19 +139,19 @@ void TetrisWindow::drawBackground() {
     dst_rect = {223 - (width / 2), 13 - (height / 2), width, height};
     SDL_RenderCopy(sdl_renderer, next_text_texture->sdl_texture, &src_rect, &dst_rect);
 
-    // Draw hold text
-    width = hold_text_texture->width;
-    height = hold_text_texture->height;
-    src_rect = {0, 0, width, height};
-    dst_rect = {223 - (width / 2), 325 - (height / 2), width, height};
-    SDL_RenderCopy(sdl_renderer, hold_text_texture->sdl_texture, &src_rect, &dst_rect);
-
     // Draw score text
     width = score_text_texture->width;
     height = score_text_texture->height;
     src_rect = {0, 0, width, height};
     dst_rect = {223 - (width / 2), 200 - (height / 2), width, height};
     SDL_RenderCopy(sdl_renderer, score_text_texture->sdl_texture, &src_rect, &dst_rect);
+
+    // Draw level text
+    width = level_text_texture->width;
+    height = level_text_texture->height;
+    src_rect = {0, 0, width, height};
+    dst_rect = {223 - (width / 2), 260 - (height / 2), width, height};
+    SDL_RenderCopy(sdl_renderer, level_text_texture->sdl_texture, &src_rect, &dst_rect);
 }
 
 void TetrisWindow::drawBoard(int (*board)[24]) {
@@ -201,6 +203,13 @@ void TetrisWindow::drawNext(Tetromino *tetromino, int index) {
 }
 
 void TetrisWindow::drawHold(Tetromino *tetromino) {
+    // Draw hold text
+    int width = hold_text_texture->width;
+    int height = hold_text_texture->height;
+    SDL_Rect src_rect = {0, 0, width, height};
+    SDL_Rect dst_rect = {223 - (width / 2), 325 - (height / 2), width, height};
+    SDL_RenderCopy(sdl_renderer, hold_text_texture->sdl_texture, &src_rect, &dst_rect);
+
     drawGui(tetromino, 188, 351);
 }
 
@@ -239,4 +248,17 @@ void TetrisWindow::drawScoreValue(int score) {
     SDL_RenderCopy(sdl_renderer, score_value_texture->sdl_texture, &src_rect, &dst_rect);
 
     delete score_value_texture;
+}
+
+void TetrisWindow::drawLevelValue(int level) {
+    SDL::Texture *level_value_texture = SDL::Texture::fromText(sdl_renderer, ubuntu_regular_20,
+                                                               std::to_string(level));
+
+    int width = level_value_texture->width;
+    int height = level_value_texture->height;
+    SDL_Rect src_rect = {0, 0, width, height};
+    SDL_Rect dst_rect = {223 - (width / 2), 284 - (height / 2), width, height};
+    SDL_RenderCopy(sdl_renderer, level_value_texture->sdl_texture, &src_rect, &dst_rect);
+
+    delete level_value_texture;
 }
