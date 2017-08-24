@@ -34,7 +34,7 @@ void App::initSdlImage() {
 
 void App::setTextureFilteringToLinear() {
     if (SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1") == SDL_FALSE) {
-        printf("Warning: Linear texture filtering not enabled!");
+        printf("Warning: Linear tetromino_texture filtering not enabled!");
     }
 }
 

@@ -1,6 +1,8 @@
 #include <SDL.h>
 #include "Timer.hpp"
 
+using namespace SDL;
+
 Timer::Timer() {
     reset();
 }

@@ -12,6 +12,7 @@ namespace SDL {
         SDL_Window *sdl_window;
         SDL_Renderer *sdl_renderer;
 
+        void clearScreen();
 
     public:
         Window(std::string name = "SDL Window", int width = 600, int height = 400);
@@ -19,8 +20,6 @@ namespace SDL {
         void renderToScreen();
 
         virtual ~Window();
-
-        virtual void draw();
     };
 
 }

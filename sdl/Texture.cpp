@@ -5,7 +5,7 @@ using namespace SDL;
 
 // TODO: Redo this function
 Texture *Texture::fromPath(SDL_Renderer *sdl_renderer, std::string path) {
-    //The final texture
+    //The final tetromino_texture
     SDL_Texture *newTexture = NULL;
 
     //Load image at specified path
@@ -13,10 +13,10 @@ Texture *Texture::fromPath(SDL_Renderer *sdl_renderer, std::string path) {
     if (loadedSurface == NULL) {
         printf("Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError());
     } else {
-        //Create texture from surface pixels
+        //Create tetromino_texture from surface pixels
         newTexture = SDL_CreateTextureFromSurface(sdl_renderer, loadedSurface);
         if (newTexture == NULL) {
-            printf("Unable to create texture from %s! SDL Error: %s\n", path.c_str(),
+            printf("Unable to create tetromino_texture from %s! SDL Error: %s\n", path.c_str(),
                    SDL_GetError());
         }
 

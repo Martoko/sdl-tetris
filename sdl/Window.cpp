@@ -25,16 +25,22 @@ Window::~Window() {
 }
 
 void Window::renderToScreen() {
-    // TODO: Error handling
-    SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-    SDL_RenderClear(sdl_renderer);
-
-    draw();
-
+    // First we present to the screen
     SDL_RenderPresent(sdl_renderer);
+
+    // Then we clear the internal drawing, in preparation for the next draw call
+    clearScreen();
 }
 
-void Window::draw() {
-    // TODO: Stuff
-    //SDL_RenderCopy( gRenderer, gTexture, NULL, NULL );
+void Window::clearScreen() {
+    int result = SDL_SetRenderDrawColor(sdl_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+    if (result == -1) {
+        throw new SdlError();
+    }
+
+    result = SDL_RenderClear(sdl_renderer);
+    if (result == -1) {
+        throw new SdlError();
+    }
 }
+

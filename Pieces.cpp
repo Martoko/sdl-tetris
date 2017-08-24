@@ -1,5 +1,8 @@
 #include "Pieces.hpp"
 
+/**
+ * @return All possible tetrominos, at all possible rotations
+ */
 std::vector<std::vector<std::vector<Piece>>> getPieces() {
 
     int pieces_raw[7][4][4][4] = {
