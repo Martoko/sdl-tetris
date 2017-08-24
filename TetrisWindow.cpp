@@ -7,6 +7,7 @@ TetrisWindow::TetrisWindow(std::string name) : Window(name, BOARD_WIDTH, BOARD_H
     ghost_texture = SDL::Texture::fromPath(sdl_renderer, "img/tetromino_ghost.png");
     board_texture = SDL::Texture::fromPath(sdl_renderer, "img/board.png");
     dim_screen_texture = SDL::Texture::fromPath(sdl_renderer, "img/dim_screen.png");
+    instructions_texture = SDL::Texture::fromPath(sdl_renderer, "img/instructions.png");
 
     ubuntu_regular_20 = TTF_OpenFont("fnt/ubuntu-font-family-0.83/Ubuntu-R.ttf", 20);
     if (ubuntu_regular_20 == NULL) {
@@ -36,6 +37,7 @@ TetrisWindow::~TetrisWindow() {
     delete ghost_texture;
     delete board_texture;
     delete dim_screen_texture;
+    delete instructions_texture;
 
     delete next_text_texture;
     delete hold_text_texture;
@@ -43,6 +45,12 @@ TetrisWindow::~TetrisWindow() {
     delete pause_text_texture;
     delete game_over_title_text;
     delete game_over_description_text;
+}
+
+void TetrisWindow::drawInstructions() {
+    SDL_Rect src_rect = {0, 0, BOARD_WIDTH, BOARD_HEIGHT};
+    SDL_Rect dst_rect = {0, 0, BOARD_WIDTH, BOARD_HEIGHT};
+    SDL_RenderCopy(sdl_renderer, instructions_texture->sdl_texture, &src_rect, &dst_rect);
 }
 
 void TetrisWindow::drawGameOver(int score) {

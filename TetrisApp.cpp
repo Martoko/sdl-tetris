@@ -36,8 +36,11 @@ void TetrisApp::run() {
 void TetrisApp::step() {
     propagateEvents();
 
-    if (gravity_timer.getTicks() > gravity_delay && !paused && !game_over
-        && current_tetromino != nullptr) {
+    if (game_over || paused || show_instructions) {
+        return;
+    }
+
+    if (gravity_timer.getTicks() > gravity_delay && current_tetromino != nullptr) {
         bool did_move = tryApplyGravity();
 
         if (did_move && gravity_delay == GRAVITY_FAST_DELAY) {
@@ -50,6 +53,12 @@ void TetrisApp::step() {
 
 void TetrisApp::draw() {
     window.drawBackground();
+
+    if (show_instructions) {
+        window.drawInstructions();
+        window.renderToScreen();
+        return;
+    }
 
     window.drawScoreValue(score);
 
@@ -120,6 +129,11 @@ void TetrisApp::onKeyDown(SDL_KeyboardEvent event) {
                 break;
         }
 
+        return;
+    }
+
+    if (show_instructions) {
+        show_instructions = false;
         return;
     }
 

@@ -18,6 +18,7 @@ class TetrisWindow : public SDL::Window {
     SDL::Texture *board_texture;
     SDL::Texture *ghost_texture;
     SDL::Texture *dim_screen_texture;
+    SDL::Texture *instructions_texture;
     SDL::Texture *game_over_title_text;
     SDL::Texture *game_over_description_text;
 
@@ -58,6 +59,8 @@ public:
     void drawScoreValue(int score);
 
     void drawGameOver(int score);
+
+    void drawInstructions();
 };
 
 

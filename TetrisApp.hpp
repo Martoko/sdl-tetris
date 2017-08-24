@@ -17,11 +17,12 @@ class TetrisApp : public SDL::App {
     Tetromino *ghost_tetromino = new Tetromino(0, 0, 0);
     Tetromino *hold_tetromino = nullptr;
     int board[10][24];
-    bool paused = false;
+    bool paused = true;
     // Last time lines were cleared, how many?
     bool last_line_clear_was_tetris = false;
     int score = 0;
     bool already_switched_hold = false;
+    bool show_instructions = true;
 
     TetrominoBag bag;
 
