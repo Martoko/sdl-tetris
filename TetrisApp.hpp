@@ -3,6 +3,7 @@
 
 #include "sdl/App.hpp"
 #include "TetrisWindow.hpp"
+#include "TetrominoBag.hpp"
 
 class TetrisApp : public SDL::App {
     TetrisWindow window = TetrisWindow("Tetris");
@@ -13,15 +14,23 @@ class TetrisApp : public SDL::App {
     const int GRAVITY_FAST_DELAY = 100;
     int gravity_delay = GRAVITY_NORMAL_DELAY;
     Tetromino *current_tetromino = nullptr;
-    Tetromino *ghost_tetromino = nullptr;
+    Tetromino *ghost_tetromino = new Tetromino(0, 0, 0);
+    Tetromino *hold_tetromino = nullptr;
     int board[10][24];
+    bool paused = false;
+    // Last time lines were cleared, how many?
+    bool last_line_clear_was_tetris = false;
+    int score = 0;
+    bool already_switched_hold = false;
+
+    TetrominoBag bag;
 
     const int BOARD_MIN_X = 0;
     const int BOARD_MAX_X = 9;
     const int BOARD_MAX_Y = 23;
 
-    std::vector<int> bag = {0, 1, 2, 3, 4, 5, 6};
-    int bag_index = 0;
+    const int TETROMINO_START_X = 3;
+    const int TETROMINO_START_Y = 2;
 
 public:
     TetrisApp();
@@ -50,9 +59,9 @@ public:
 
     Tetromino *newTetrominoFromBag();
 
-    void rotate(Tetromino *tetromino);
+    void rotate(Tetromino *tetromino, int amount);
 
-    bool tryRotate(Tetromino *tetromino);
+    bool tryRotate(Tetromino *tetromino, int amount);
 
     void clearLines();
 

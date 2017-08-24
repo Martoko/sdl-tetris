@@ -15,6 +15,6 @@ void Surface::clear() {
     const int SUCCESS = 0;
 
     if (result != SUCCESS) {
-        throw new SdlError("");
+        throw SdlError("");
     }
 }

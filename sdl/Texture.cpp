@@ -13,13 +13,13 @@ Texture *Texture::fromPath(SDL_Renderer *sdl_renderer, std::string path) {
     // Load image at specified path
     SDL_Surface *loaded_surface = IMG_Load(path.c_str());
     if (loaded_surface == NULL) {
-        throw new SdlImgError("Unable to load image " + path);
+        throw SdlImgError("Unable to load image " + path);
     }
 
     // Create texture from surface pixels
     sdl_texture = SDL_CreateTextureFromSurface(sdl_renderer, loaded_surface);
     if (sdl_texture == NULL) {
-        throw new SdlError("Unable to create texture from " + path);
+        throw SdlError("Unable to create texture from " + path);
     }
 
     // Get image dimensions
@@ -35,15 +35,15 @@ Texture *Texture::fromPath(SDL_Renderer *sdl_renderer, std::string path) {
 Texture *Texture::fromText(SDL_Renderer *sdl_renderer, TTF_Font *font, std::string text,
                            SDL_Color color) {
     // Render text surface
-    SDL_Surface *text_surface = TTF_RenderText_Solid(font, text.c_str(), color);
+    SDL_Surface *text_surface = TTF_RenderUTF8_Blended(font, text.c_str(), color);
     if (text_surface == NULL) {
-        throw new SdlTtfError("Unable to render text surface!");
+        throw SdlTtfError("Unable to render text surface!");
     }
 
     // Create texture from surface pixels
     SDL_Texture *sdl_texture = SDL_CreateTextureFromSurface(sdl_renderer, text_surface);
     if (sdl_texture == NULL) {
-        throw new SdlTtfError("Unable to create texture from rendered text!");
+        throw SdlError("Unable to create texture from rendered text!");
     }
 
     // Get image dimensions

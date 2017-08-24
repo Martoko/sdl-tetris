@@ -17,6 +17,14 @@ class TetrisWindow : public SDL::Window {
     SDL::Texture *tetromino_texture;
     SDL::Texture *board_img;
     SDL::Texture *ghost_texture;
+    SDL::Texture *pause_img;
+
+    TTF_Font *ubuntu_regular_20;
+    TTF_Font *ubuntu_regular_48;
+    SDL::Texture *score_text_texture;
+    SDL::Texture *next_text_texture;
+    SDL::Texture *hold_text_texture;
+    SDL::Texture *pause_text_texture;
 
 public:
     TetrisWindow(std::string name);
@@ -32,6 +40,20 @@ public:
     void drawGhost(Tetromino *tetromino);
 
     void drawGhostPiece(int color, int x, int y);
+
+    void drawHold(Tetromino *tetromino);
+
+    void drawGuiPiece(int color, int x, int y);
+
+    void drawGui(Tetromino *tetromino, int anchor_x, int anchor_y);
+
+    void drawNext(Tetromino *tetromino, int index);
+
+    void drawPause();
+
+    void drawBackground();
+
+    void drawScoreValue(int score);
 };
 
 

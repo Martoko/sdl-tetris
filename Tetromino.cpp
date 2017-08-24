@@ -113,3 +113,9 @@ void Tetromino::setRotation(int rotation) {
 
     loadPieces();
 }
+
+void Tetromino::setColor(int color) {
+    Tetromino::color = color;
+
+    loadPieces();
+}

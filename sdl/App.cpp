@@ -24,7 +24,7 @@ void App::initSdl() {
     const int SUCCESS = 0;
 
     if (result != SUCCESS) {
-        throw new SdlError("SDL could not initialize!");
+        throw SdlError("SDL could not initialize!");
     }
 }
 
@@ -32,7 +32,7 @@ void App::initSdlImage() {
     int imgFlags = IMG_INIT_PNG;
     const int FAILURE = 0;
     if (IMG_Init(imgFlags) & imgFlags == FAILURE) {
-        throw new SdlImgError("SDL_image could not initialize!");
+        throw SdlImgError("SDL_image could not initialize!");
     }
 }
 
@@ -41,7 +41,7 @@ void App::initSdlTtf() const {
     const int SUCCESS = 0;
 
     if (result != SUCCESS) {
-        throw new SdlTtfError("SDL_ttf could not initialize!");
+        throw SdlTtfError("SDL_ttf could not initialize!");
     }
 }
 

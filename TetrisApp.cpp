@@ -11,9 +11,7 @@ TetrisApp::TetrisApp() {
         }
     }
 
-    reshuffleBag();
     current_tetromino = newTetrominoFromBag();
-    ghost_tetromino = new Tetromino(current_tetromino);
     resetGhost();
     gravity_timer.reset();
 }
@@ -23,42 +21,17 @@ TetrisApp::~TetrisApp() {
         delete current_tetromino;
     }
 
-    if (ghost_tetromino != nullptr) {
-        delete ghost_tetromino;
+    delete ghost_tetromino;
+
+    if (hold_tetromino != nullptr) {
+        delete hold_tetromino;
     }
 }
 
 Tetromino *TetrisApp::newTetrominoFromBag() {
-    bag_index++;
-    if (bag_index > 6) {
-        reshuffleBag();
-        bag_index = 0;
-    }
+    int color = bag.popFront();
 
-    int color = bag[bag_index];
-
-    const int START_X = 3;
-    const int START_Y = 2;
-    return new Tetromino(START_X, START_Y, color);
-}
-
-/**
- * Reshuffles the bag and resets the bag index
- */
-void TetrisApp::reshuffleBag() {
-    printf("Reshuffling bag: ");
-    for (auto &&item : bag) {
-        printf("%i ", item);
-    }
-    printf("\n");
-
-    std::random_shuffle(bag.begin(), bag.end());
-
-    printf("New bag: ");
-    for (auto &&item : bag) {
-        printf("%i ", item);
-    }
-    printf("\n");
+    return new Tetromino(TETROMINO_START_X, TETROMINO_START_Y, color);
 }
 
 void TetrisApp::run() {
@@ -72,19 +45,43 @@ void TetrisApp::run() {
 void TetrisApp::step() {
     propagateEvents();
 
-    if (gravity_timer.getTicks() > gravity_delay && !game_over && current_tetromino != nullptr) {
+    if (gravity_timer.getTicks() > gravity_delay && !paused && !game_over
+        && current_tetromino != nullptr) {
         tryApplyGravity();
         gravity_timer.reset();
     }
 }
 
 void TetrisApp::draw() {
-    window.drawBoard(board);
-    if (current_tetromino != nullptr) {
+    window.drawBackground();
+
+    window.drawScoreValue(score);
+
+    if (!paused || game_over) {
+        window.drawBoard(board);
+    }
+
+    if (hold_tetromino != nullptr && !game_over && !paused) {
+        window.drawHold(hold_tetromino);
+    }
+
+    if (!game_over && !paused) {
+        for (int i = 0; i < 3; ++i) {
+            Tetromino *tetromino = new Tetromino(0, 0, bag.peekFront((unsigned long) i));
+            window.drawNext(tetromino, i);
+            delete tetromino;
+        }
+    }
+
+    if (current_tetromino != nullptr && !paused) {
         window.draw(current_tetromino);
     }
-    if (ghost_tetromino != nullptr) {
+    if (current_tetromino != nullptr && !paused) {
         window.drawGhost(ghost_tetromino);
+    }
+
+    if (paused && !game_over) {
+        window.drawPause();
     }
 
     window.renderToScreen();
@@ -100,6 +97,19 @@ void TetrisApp::propagateEvents() {
             onKeyDown(event.key);
         } else if (event.type == SDL_KEYUP) {
             onKeyUp(event.key);
+        } else if (event.type == SDL_WINDOWEVENT) {
+            switch (event.window.event) {
+                case SDL_WINDOWEVENT_FOCUS_LOST:
+                    printf("lost focus");
+                    paused = true;
+                    break;
+                case SDL_WINDOWEVENT_FOCUS_GAINED:
+                    printf("got focus");
+                    paused = false;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
@@ -122,11 +132,44 @@ void TetrisApp::onKeyDown(SDL_KeyboardEvent event) {
             gravity_delay = GRAVITY_FAST_DELAY;
             break;
         case SDLK_UP:
-            rotate(current_tetromino);
+            rotate(current_tetromino, 1);
+            resetGhost();
+            break;
+        case SDLK_z:
+            rotate(current_tetromino, -1);
             resetGhost();
             break;
         case SDLK_SPACE:
             sinkTetromino();
+            break;
+        case SDLK_c:
+            // You can't hold twice in same "round"
+            if (already_switched_hold) {
+                return;
+            }
+
+            if (hold_tetromino == nullptr) {
+                hold_tetromino = current_tetromino;
+                current_tetromino = newTetrominoFromBag();
+            } else {
+                Tetromino *old_hold_tetromino = hold_tetromino;
+                Tetromino *old_current_tetromino = current_tetromino;
+
+                hold_tetromino = old_current_tetromino;
+                current_tetromino = old_hold_tetromino;
+            }
+
+            already_switched_hold = true;
+
+            hold_tetromino->setX(0);
+            hold_tetromino->setY(0);
+            hold_tetromino->setRotation(0);
+
+            current_tetromino->setX(TETROMINO_START_X);
+            current_tetromino->setY(TETROMINO_START_Y);
+            current_tetromino->setRotation(0);
+
+            resetGhost();
             break;
         default:
             break;
@@ -158,10 +201,8 @@ void TetrisApp::sinkTetromino() {
  * @return a bool of whether or not it succeeded in moving the block
  */
 bool TetrisApp::tryApplyGravity() {
-    printf("Doing gravity\n");
     bool did_move = move(current_tetromino, 0, 1);
     if (!did_move) {
-        printf("Collision\n");
 
         for (unsigned int i = 0; i < 4; ++i) {
             int piece_x = current_tetromino->getPieceX(i);
@@ -171,10 +212,10 @@ bool TetrisApp::tryApplyGravity() {
 
         delete current_tetromino;
         current_tetromino = newTetrominoFromBag();
-        ghost_tetromino = new Tetromino(current_tetromino);
-        resetGhost();
+        already_switched_hold = false;
         gravity_timer.reset();
         clearLines();
+        resetGhost();
 
         if (current_tetromino->collidesWithBoard(board)) {
             printf("Game over!");
@@ -182,9 +223,6 @@ bool TetrisApp::tryApplyGravity() {
 
             delete current_tetromino;
             current_tetromino = nullptr;
-
-            delete ghost_tetromino;
-            ghost_tetromino = nullptr;
         }
 
 
@@ -210,38 +248,38 @@ bool TetrisApp::move(Tetromino *tetromino, int dx, int dy) {
     }
 }
 
-void TetrisApp::rotate(Tetromino *tetromino) {
+void TetrisApp::rotate(Tetromino *tetromino, int amount) {
     // First we try to rotate in place
-    if (tryRotate(tetromino)) {
+    if (tryRotate(tetromino, amount)) {
         return;
     }
 
     // If that fails we try to move it +/- up to 2 x, and see if rotation works then
     tetromino->move(1, 0);
-    if (tryRotate(tetromino)) {
+    if (tryRotate(tetromino, amount)) {
         return;
     }
 
     tetromino->move(1, 0);
-    if (tryRotate(tetromino)) {
+    if (tryRotate(tetromino, amount)) {
         return;
     }
 
     tetromino->move(-3, 0);
-    if (tryRotate(tetromino)) {
+    if (tryRotate(tetromino, amount)) {
         return;
     }
     tetromino->move(-1, 0);
-    if (tryRotate(tetromino)) {
+    if (tryRotate(tetromino, amount)) {
         return;
     }
 }
 
-bool TetrisApp::tryRotate(Tetromino *tetromino) {
-    tetromino->rotate(1);
+bool TetrisApp::tryRotate(Tetromino *tetromino, int amount) {
+    tetromino->rotate(amount);
     if (tetromino->collidesWithBoard(board)
         || tetromino->outOfBounds(BOARD_MIN_X, BOARD_MAX_X, BOARD_MAX_Y)) {
-        tetromino->rotate(-1);
+        tetromino->rotate(-amount);
         return false;
     } else {
         return true;
@@ -249,6 +287,7 @@ bool TetrisApp::tryRotate(Tetromino *tetromino) {
 }
 
 void TetrisApp::resetGhost() {
+    ghost_tetromino->setColor(current_tetromino->getColor());
     ghost_tetromino->setRotation(current_tetromino->getRotation());
     ghost_tetromino->setX(current_tetromino->getX());
     ghost_tetromino->setY(current_tetromino->getY());
@@ -260,6 +299,8 @@ void TetrisApp::resetGhost() {
 }
 
 void TetrisApp::clearLines() {
+    int lines_cleared = 0;
+
     for (int y = 23; y >= 0; --y) {
 
         bool full_line = true;
@@ -271,7 +312,7 @@ void TetrisApp::clearLines() {
         }
 
         if (full_line) {
-            printf("Scored line at %i\n", y);
+            lines_cleared++;
             for (int x = 0; x < 10; ++x) {
                 board[x][y] = -1;
             }
@@ -290,5 +331,26 @@ void TetrisApp::clearLines() {
                 y++;
             }
         }
+    }
+
+    const int line_clear_scores[] = {
+            0,
+            100,
+            300,
+            400,
+            800
+    };
+
+    score += line_clear_scores[lines_cleared];
+
+    if (lines_cleared == 4) {
+        if (last_line_clear_was_tetris) {
+            score += line_clear_scores[4] / 2;
+        }
+
+        last_line_clear_was_tetris = true;
+
+    } else if (lines_cleared != 0) {
+        last_line_clear_was_tetris = false;
     }
 }

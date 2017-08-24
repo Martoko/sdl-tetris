@@ -35,6 +35,8 @@ public:
 
     int getPieceY(unsigned int i) const;
 
+    void setColor(int color);
+
     bool collidesWithBoard(int board[10][24]);
 
     void move(int dx, int dy);
