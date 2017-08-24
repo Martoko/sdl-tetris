@@ -4,16 +4,7 @@
 #include "TetrisApp.hpp"
 
 TetrisApp::TetrisApp() {
-    // Reset board to empty space
-    for (int x = 0; x < 10; ++x) {
-        for (int y = 0; y < 24; ++y) {
-            board[x][y] = -1;
-        }
-    }
-
-    current_tetromino = newTetrominoFromBag();
-    resetGhost();
-    gravity_timer.reset();
+    restartGame();
 }
 
 TetrisApp::~TetrisApp() {
@@ -47,7 +38,12 @@ void TetrisApp::step() {
 
     if (gravity_timer.getTicks() > gravity_delay && !paused && !game_over
         && current_tetromino != nullptr) {
-        tryApplyGravity();
+        bool did_move = tryApplyGravity();
+
+        if (did_move && gravity_delay == GRAVITY_FAST_DELAY) {
+            score += 1;
+        }
+
         gravity_timer.reset();
     }
 }
@@ -80,7 +76,9 @@ void TetrisApp::draw() {
         window.drawGhost(ghost_tetromino);
     }
 
-    if (paused && !game_over) {
+    if (game_over) {
+        window.drawGameOver(score);
+    } else if (paused) {
         window.drawPause();
     }
 
@@ -116,6 +114,12 @@ void TetrisApp::propagateEvents() {
 
 void TetrisApp::onKeyDown(SDL_KeyboardEvent event) {
     if (game_over) {
+        switch (event.keysym.sym) {
+            case SDLK_r:
+                restartGame();
+                break;
+        }
+
         return;
     }
 
@@ -191,9 +195,10 @@ void TetrisApp::onKeyUp(SDL_KeyboardEvent event) {
 }
 
 void TetrisApp::sinkTetromino() {
-    bool tetrominoMoved = true;
-    while (tetrominoMoved) {
-        tetrominoMoved = tryApplyGravity();
+    bool did_move = tryApplyGravity();
+    while (did_move) {
+        score += 2;
+        did_move = tryApplyGravity();
     }
 }
 
@@ -353,4 +358,33 @@ void TetrisApp::clearLines() {
     } else if (lines_cleared != 0) {
         last_line_clear_was_tetris = false;
     }
+}
+
+void TetrisApp::restartGame() {
+    // Reset board to empty space
+    for (int x = 0; x < 10; ++x) {
+        for (int y = 0; y < 24; ++y) {
+            board[x][y] = -1;
+        }
+    }
+
+    if (current_tetromino != nullptr) {
+        delete current_tetromino;
+        current_tetromino = nullptr;
+    }
+
+    if (hold_tetromino != nullptr) {
+        delete hold_tetromino;
+        hold_tetromino = nullptr;
+    }
+
+    score = 0;
+
+    bag.clear();
+
+    game_over = false;
+
+    current_tetromino = newTetrominoFromBag();
+    resetGhost();
+    gravity_timer.reset();
 }

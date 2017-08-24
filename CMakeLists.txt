@@ -20,6 +20,6 @@ target_link_libraries(tetris_cpp_sdl2 ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} 
 configure_file(img/tetromino.png ./img/tetromino.png COPYONLY)
 configure_file(img/tetromino_ghost.png ./img/tetromino_ghost.png COPYONLY)
 configure_file(img/board.png ./img/board.png COPYONLY)
-configure_file(img/pause.png ./img/pause.png COPYONLY)
+configure_file(img/dim_screen.png img/dim_screen.png COPYONLY)
 
 configure_file(fnt/ubuntu-font-family-0.83/Ubuntu-R.ttf ./fnt/ubuntu-font-family-0.83/Ubuntu-R.ttf COPYONLY)

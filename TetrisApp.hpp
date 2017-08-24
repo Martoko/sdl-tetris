@@ -66,6 +66,8 @@ public:
     void clearLines();
 
     void resetGhost();
+
+    void restartGame();
 };
 
 

@@ -38,3 +38,7 @@ void TetrominoBag::addMoreToQueue() {
 void TetrominoBag::shuffleTetrominoColors() {
     std::random_shuffle(tetromino_colors.begin(), tetromino_colors.end());
 }
+
+void TetrominoBag::clear() {
+    queue.clear();
+}

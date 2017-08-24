@@ -15,12 +15,14 @@ const int BOARD_HEIGHT = 402;
 
 class TetrisWindow : public SDL::Window {
     SDL::Texture *tetromino_texture;
-    SDL::Texture *board_img;
+    SDL::Texture *board_texture;
     SDL::Texture *ghost_texture;
-    SDL::Texture *pause_img;
+    SDL::Texture *dim_screen_texture;
+    SDL::Texture *game_over_title_text;
+    SDL::Texture *game_over_description_text;
 
     TTF_Font *ubuntu_regular_20;
-    TTF_Font *ubuntu_regular_48;
+    TTF_Font *ubuntu_regular_44;
     SDL::Texture *score_text_texture;
     SDL::Texture *next_text_texture;
     SDL::Texture *hold_text_texture;
@@ -54,6 +56,8 @@ public:
     void drawBackground();
 
     void drawScoreValue(int score);
+
+    void drawGameOver(int score);
 };
 
 

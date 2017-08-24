@@ -15,6 +15,8 @@ public:
 
     int peekFront(unsigned long index = 0);
 
+    void clear();
+
 private:
 
     void addMoreToQueue();
