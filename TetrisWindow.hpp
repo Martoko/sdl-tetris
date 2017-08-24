@@ -10,13 +10,16 @@
 #include "sdl/Timer.hpp"
 #include "Tetromino.hpp"
 
+const int BOARD_WIDTH = 264;
+const int BOARD_HEIGHT = 402;
+
 class TetrisWindow : public SDL::Window {
     SDL::Texture *tetromino_texture;
     SDL::Texture *board_img;
     SDL::Texture *ghost_texture;
 
 public:
-    TetrisWindow(std::string name, int width, int height);
+    TetrisWindow(std::string name);
 
     virtual ~TetrisWindow();
 

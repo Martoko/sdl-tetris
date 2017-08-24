@@ -5,7 +5,7 @@
 #include "TetrisWindow.hpp"
 
 class TetrisApp : public SDL::App {
-    TetrisWindow window = TetrisWindow("Tetris", 182 + 4, 398 + 4);
+    TetrisWindow window = TetrisWindow("Tetris");
     bool should_quit = false;
     bool game_over = false;
     SDL::Timer gravity_timer;

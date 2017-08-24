@@ -16,6 +16,8 @@ namespace SDL {
         void setTextureFilteringToLinear();
 
         void initSdlImage();
+
+        void initSdlTtf() const;
     };
 
 }

@@ -1,7 +1,9 @@
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 #include "App.hpp"
 #include "SdlError.hpp"
 #include "SdlImgError.hpp"
+#include "SdlTtfError.hpp"
 
 using namespace SDL;
 
@@ -13,6 +15,8 @@ App::App() {
     setTextureFilteringToLinear();
 
     initSdlImage();
+
+    initSdlTtf();
 }
 
 void App::initSdl() {
@@ -32,6 +36,15 @@ void App::initSdlImage() {
     }
 }
 
+void App::initSdlTtf() const {
+    int result = TTF_Init();
+    const int SUCCESS = 0;
+
+    if (result != SUCCESS) {
+        throw new SdlTtfError("SDL_ttf could not initialize!");
+    }
+}
+
 void App::setTextureFilteringToLinear() {
     if (SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1") == SDL_FALSE) {
         printf("Warning: Linear tetromino_texture filtering not enabled!");
@@ -39,6 +52,7 @@ void App::setTextureFilteringToLinear() {
 }
 
 App::~App() {
+    TTF_Quit();
     IMG_Quit();
     SDL_Quit();
 }

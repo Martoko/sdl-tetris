@@ -1,7 +1,7 @@
 #include <algorithm>
 #include "TetrisWindow.hpp"
 
-TetrisWindow::TetrisWindow(std::string name, int width, int height) : Window(name, width, height) {
+TetrisWindow::TetrisWindow(std::string name) : Window(name, BOARD_WIDTH, BOARD_HEIGHT) {
     tetromino_texture = SDL::Texture::fromPath(sdl_renderer, "tetromino.png");
     ghost_texture = SDL::Texture::fromPath(sdl_renderer, "tetromino_ghost.png");
     board_img = SDL::Texture::fromPath(sdl_renderer, "board.png");
@@ -30,8 +30,8 @@ void TetrisWindow::drawGhost(Tetromino *tetromino) {
 }
 
 void TetrisWindow::drawBoard(int (*board)[24]) {
-    SDL_Rect src_rect = {0, 0, 182, 398};
-    SDL_Rect dst_rect = {0 + 2, 0 + 2, 182, 398};
+    SDL_Rect src_rect = {0, 0, BOARD_WIDTH, BOARD_HEIGHT};
+    SDL_Rect dst_rect = {0, 0, BOARD_WIDTH, BOARD_HEIGHT};
     SDL_RenderCopy(sdl_renderer, board_img->sdl_texture, &src_rect, &dst_rect);
 
     for (int x = 0; x < 10; ++x) {
