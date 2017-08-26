@@ -4,7 +4,7 @@
 #include <vector>
 #include "Piece.hpp"
 
-std::vector<std::vector<std::vector<Piece>>> getPieces();
+std::vector<std::vector<std::vector<Piece>>> createListOfAllPieces();
 
 
 #endif //TETRIS_CPP_SDL2_PIECES_HPP

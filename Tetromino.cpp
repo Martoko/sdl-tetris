@@ -1,7 +1,7 @@
 #include <stdexcept>
 #include "Tetromino.hpp"
 
-std::vector<std::vector<std::vector<Piece>>> Tetromino::all_pieces = getPieces();
+std::vector<std::vector<std::vector<Piece>>> Tetromino::all_pieces = createListOfAllPieces();
 
 Tetromino::Tetromino(int x, int y, int color) : color(color), x(x), y(y) {
     loadPieces();
@@ -86,10 +86,6 @@ void Tetromino::rotate(int delta_rotation) {
     }
 
     loadPieces();
-}
-
-Tetromino::Tetromino(Tetromino *tetromino) :
-        Tetromino(tetromino->getX(), tetromino->getY(), tetromino->getColor()) {
 }
 
 void Tetromino::setX(int x) {

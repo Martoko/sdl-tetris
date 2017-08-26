@@ -45,8 +45,6 @@ public:
 
     void rotate(int delta_rotation);
 
-    Tetromino(Tetromino *tetromino);
-
     void loadPieces();
 };
 

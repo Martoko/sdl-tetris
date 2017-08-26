@@ -3,14 +3,17 @@
 
 #include <SDL.h>
 #include <string>
-#include "Surface.hpp"
+#include <memory>
+
+typedef std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)> WindowPointer;
+typedef std::unique_ptr<SDL_Renderer, decltype(&SDL_DestroyRenderer)> RendererPointer;
 
 namespace SDL {
 
     class Window {
     protected:
-        SDL_Window *sdl_window;
-        SDL_Renderer *sdl_renderer;
+        WindowPointer sdl_window = WindowPointer(nullptr, &SDL_DestroyWindow);
+        RendererPointer sdl_renderer = RendererPointer(nullptr, &SDL_DestroyRenderer);
 
         void clearScreen();
 
@@ -18,8 +21,6 @@ namespace SDL {
         Window(std::string name = "SDL Window", int width = 600, int height = 400);
 
         void renderToScreen();
-
-        virtual ~Window();
     };
 
 }

@@ -9,7 +9,7 @@
  * SdlError should only be created after SDL experiences an error
  * as it call SDL_GetError()
  */
-class SdlError : std::exception {
+class SdlError : public std::exception {
     std::string msg;
 
 public:

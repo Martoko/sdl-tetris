@@ -1,4 +1,3 @@
-#include <lirc_client.h>
 #include <stdexcept>
 #include <algorithm>
 #include "TetrisApp.hpp"
@@ -7,22 +6,10 @@ TetrisApp::TetrisApp() {
     restartGame();
 }
 
-TetrisApp::~TetrisApp() {
-    if (current_tetromino != nullptr) {
-        delete current_tetromino;
-    }
-
-    delete ghost_tetromino;
-
-    if (hold_tetromino != nullptr) {
-        delete hold_tetromino;
-    }
-}
-
-Tetromino *TetrisApp::newTetrominoFromBag() {
+std::unique_ptr<Tetromino> TetrisApp::newTetrominoFromBag() {
     int color = bag.popFront();
 
-    return new Tetromino(TETROMINO_START_X, TETROMINO_START_Y, color);
+    return std::make_unique<Tetromino>(TETROMINO_START_X, TETROMINO_START_Y, color);
 }
 
 void TetrisApp::run() {
@@ -72,7 +59,7 @@ void TetrisApp::draw() {
     }
 
     if (hold_tetromino != nullptr && !game_over && !paused) {
-        window.drawHold(hold_tetromino);
+        window.drawHold(hold_tetromino.get());
     }
 
     if (!game_over && !paused) {
@@ -84,10 +71,10 @@ void TetrisApp::draw() {
     }
 
     if (current_tetromino != nullptr && !paused) {
-        window.draw(current_tetromino);
+        window.draw(current_tetromino.get());
     }
     if (current_tetromino != nullptr && !paused) {
-        window.drawGhost(ghost_tetromino);
+        window.drawGhost(ghost_tetromino.get());
     }
 
     if (game_over) {
@@ -112,11 +99,9 @@ void TetrisApp::propagateEvents() {
         } else if (event.type == SDL_WINDOWEVENT) {
             switch (event.window.event) {
                 case SDL_WINDOWEVENT_FOCUS_LOST:
-                    printf("lost focus");
                     paused = true;
                     break;
                 case SDL_WINDOWEVENT_FOCUS_GAINED:
-                    printf("got focus");
                     paused = false;
                     break;
                 default:
@@ -142,22 +127,22 @@ void TetrisApp::onKeyDown(SDL_KeyboardEvent event) {
 
     switch (event.keysym.sym) {
         case SDLK_LEFT:
-            move(current_tetromino, -1, 0);
+            move(current_tetromino.get(), -1, 0);
             resetGhost();
             break;
         case SDLK_RIGHT:
-            move(current_tetromino, 1, 0);
+            move(current_tetromino.get(), 1, 0);
             resetGhost();
             break;
         case SDLK_DOWN:
             gravity_delay = GRAVITY_FAST_DELAY;
             break;
         case SDLK_UP:
-            rotate(current_tetromino, 1);
+            rotate(current_tetromino.get(), 1);
             resetGhost();
             break;
         case SDLK_z:
-            rotate(current_tetromino, -1);
+            rotate(current_tetromino.get(), -1);
             resetGhost();
             break;
         case SDLK_SPACE:
@@ -170,14 +155,10 @@ void TetrisApp::onKeyDown(SDL_KeyboardEvent event) {
             }
 
             if (hold_tetromino == nullptr) {
-                hold_tetromino = current_tetromino;
+                hold_tetromino = std::move(current_tetromino);
                 current_tetromino = newTetrominoFromBag();
             } else {
-                Tetromino *old_hold_tetromino = hold_tetromino;
-                Tetromino *old_current_tetromino = current_tetromino;
-
-                hold_tetromino = old_current_tetromino;
-                current_tetromino = old_hold_tetromino;
+                hold_tetromino.swap(current_tetromino);
             }
 
             already_switched_hold = true;
@@ -223,7 +204,7 @@ void TetrisApp::sinkTetromino() {
  * @return a bool of whether or not it succeeded in moving the block
  */
 bool TetrisApp::tryApplyGravity() {
-    bool did_move = move(current_tetromino, 0, 1);
+    bool did_move = move(current_tetromino.get(), 0, 1);
     if (!did_move) {
 
         for (unsigned int i = 0; i < 4; ++i) {
@@ -232,7 +213,7 @@ bool TetrisApp::tryApplyGravity() {
             board[piece_x][piece_y] = current_tetromino->getColor();
         }
 
-        delete current_tetromino;
+
         current_tetromino = newTetrominoFromBag();
         already_switched_hold = false;
         gravity_timer.reset();
@@ -240,11 +221,9 @@ bool TetrisApp::tryApplyGravity() {
         resetGhost();
 
         if (current_tetromino->collidesWithBoard(board)) {
-            printf("Game over!");
             game_over = true;
 
-            delete current_tetromino;
-            current_tetromino = nullptr;
+            current_tetromino.reset();
         }
 
 
@@ -319,7 +298,7 @@ void TetrisApp::resetGhost() {
 
     bool collide = false;
     while (!collide) {
-        collide = !move(ghost_tetromino, 0, 1);
+        collide = !move(ghost_tetromino.get(), 0, 1);
     }
 }
 
@@ -379,10 +358,10 @@ void TetrisApp::clearLines() {
         last_line_clear_was_tetris = false;
     }
 
-    lines_left_till_levelup -= lines_cleared;
+    lines_until_level_up -= lines_cleared;
 
-    if (lines_left_till_levelup < 0) {
-        lines_left_till_levelup += 10;
+    if (lines_until_level_up < 0) {
+        lines_until_level_up += 10;
         level++;
 
         if (level > 20) {
@@ -399,19 +378,12 @@ void TetrisApp::restartGame() {
         }
     }
 
-    if (current_tetromino != nullptr) {
-        delete current_tetromino;
-        current_tetromino = nullptr;
-    }
-
-    if (hold_tetromino != nullptr) {
-        delete hold_tetromino;
-        hold_tetromino = nullptr;
-    }
+    current_tetromino.reset();
+    hold_tetromino.reset();
 
     score = 0;
     level = 1;
-    lines_left_till_levelup = 10;
+    lines_until_level_up = 10;
 
     bag.clear();
 

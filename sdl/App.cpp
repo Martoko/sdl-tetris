@@ -1,9 +1,9 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include "App.hpp"
-#include "SdlError.hpp"
-#include "SdlImgError.hpp"
-#include "SdlTtfError.hpp"
+#include "error/SdlError.hpp"
+#include "error/SdlImgError.hpp"
+#include "error/SdlTtfError.hpp"
 
 using namespace SDL;
 

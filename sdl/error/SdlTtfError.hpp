@@ -3,7 +3,7 @@
 
 #include <string>
 
-class SdlTtfError : std::exception {
+class SdlTtfError : public std::exception {
     std::string msg;
 
 public:

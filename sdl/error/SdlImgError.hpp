@@ -3,7 +3,7 @@
 
 #include <string>
 
-class SdlImgError : std::exception {
+class SdlImgError : public std::exception {
     std::string msg;
 
 public:
