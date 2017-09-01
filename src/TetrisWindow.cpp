@@ -2,14 +2,15 @@
 #include "TetrisWindow.hpp"
 
 TetrisWindow::TetrisWindow() : Window("Tetris", BOARD_WIDTH, BOARD_HEIGHT) {
-    tetromino_texture = SDL::Texture::load(sdl_renderer.get(), "img/tetromino.png");
-    board_texture = SDL::Texture::load(sdl_renderer.get(), "img/board.png");
-    ghost_texture = SDL::Texture::load(sdl_renderer.get(), "img/tetromino_ghost.png");
-    dim_screen_texture = SDL::Texture::load(sdl_renderer.get(), "img/dim_screen.png");
-    instructions_texture = SDL::Texture::load(sdl_renderer.get(), "img/instructions.png");
+    tetromino_texture = SDL::Texture::load(sdl_renderer.get(), "resources/images/tetromino.png");
+    board_texture = SDL::Texture::load(sdl_renderer.get(), "resources/images/board.png");
+    ghost_texture = SDL::Texture::load(sdl_renderer.get(), "resources/images/tetromino_ghost.png");
+    dim_screen_texture = SDL::Texture::load(sdl_renderer.get(), "resources/images/dim_screen.png");
+    instructions_texture = SDL::Texture::load(sdl_renderer.get(),
+                                              "resources/images/instructions.png");
 
-    ubuntu_regular_20 = SDL::Font::load("fnt/ubuntu-font-family-0.83/Ubuntu-R.ttf", 20);
-    ubuntu_regular_44 = SDL::Font::load("fnt/ubuntu-font-family-0.83/Ubuntu-R.ttf", 44);
+    ubuntu_regular_20 = SDL::Font::load("resources/fonts/ubuntu-font-family-0.83/Ubuntu-R.ttf", 20);
+    ubuntu_regular_44 = SDL::Font::load("resources/fonts/ubuntu-font-family-0.83/Ubuntu-R.ttf", 44);
 
     next_text_texture =
             SDL::Texture::fromText(sdl_renderer.get(), ubuntu_regular_20.getSdlFont(), "next");
@@ -36,7 +37,7 @@ void TetrisWindow::drawInstructions() {
 }
 
 void TetrisWindow::drawGameOver(int score) {
-    // Draw game over img
+    // Draw game over images
     SDL_Rect src_rect = {0, 0, BOARD_WIDTH, BOARD_HEIGHT};
     SDL_Rect dst_rect = {0, 0, BOARD_WIDTH, BOARD_HEIGHT};
     SDL_RenderCopy(sdl_renderer.get(), dim_screen_texture.getSdlTexture(), &src_rect, &dst_rect);
@@ -94,7 +95,7 @@ void TetrisWindow::drawGameOver(int score) {
 }
 
 void TetrisWindow::drawPause() {
-    // Draw pause img
+    // Draw pause images
     SDL_Rect src_rect = {0, 0, BOARD_WIDTH, BOARD_HEIGHT};
     SDL_Rect dst_rect = {0, 0, BOARD_WIDTH, BOARD_HEIGHT};
     SDL_RenderCopy(sdl_renderer.get(), dim_screen_texture.getSdlTexture(), &src_rect, &dst_rect);

@@ -12,15 +12,15 @@ pkg_search_module(SDL2_TTF REQUIRED SDL2_ttf>=2.0.0)
 
 include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIRS})
 
-set(SOURCE_FILES main.cpp sdl/Window.cpp sdl/Window.hpp sdl/App.cpp sdl/App.hpp sdl/error/SdlError.cpp sdl/error/SdlError.hpp TetrisApp.cpp TetrisApp.hpp sdl/Delay.cpp sdl/Delay.hpp sdl/Texture.cpp sdl/Texture.hpp sdl/error/SdlImgError.cpp sdl/error/SdlImgError.hpp TetrisWindow.cpp TetrisWindow.hpp Piece.cpp Piece.hpp Pieces.cpp Pieces.hpp sdl/Timer.cpp sdl/Timer.hpp Tetromino.cpp Tetromino.hpp sdl/error/SdlTtfError.cpp sdl/error/SdlTtfError.hpp TetrominoBag.cpp TetrominoBag.hpp sdl/Font.cpp sdl/Font.hpp)
+set(SOURCE_FILES src/main.cpp src/sdl/Window.cpp src/sdl/Window.hpp src/sdl/App.cpp src/sdl/App.hpp src/sdl/error/SdlError.cpp src/sdl/error/SdlError.hpp src/TetrisApp.cpp src/TetrisApp.hpp src/sdl/Delay.cpp src/sdl/Delay.hpp src/sdl/Texture.cpp src/sdl/Texture.hpp src/sdl/error/SdlImgError.cpp src/sdl/error/SdlImgError.hpp src/TetrisWindow.cpp src/TetrisWindow.hpp src/Piece.cpp src/Piece.hpp src/Pieces.cpp src/Pieces.hpp src/sdl/Timer.cpp src/sdl/Timer.hpp src/Tetromino.cpp src/Tetromino.hpp src/sdl/error/SdlTtfError.cpp src/sdl/error/SdlTtfError.hpp src/TetrominoBag.cpp src/TetrominoBag.hpp src/sdl/Font.cpp src/sdl/Font.hpp src/engine/Resources.cpp src/engine/Resources.hpp src/engine/Stage.cpp src/engine/Stage.hpp)
 add_executable(tetris_cpp_sdl2 ${SOURCE_FILES})
 
 target_link_libraries(tetris_cpp_sdl2 ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})
 
-configure_file(img/tetromino.png ./img/tetromino.png COPYONLY)
-configure_file(img/tetromino_ghost.png ./img/tetromino_ghost.png COPYONLY)
-configure_file(img/board.png ./img/board.png COPYONLY)
-configure_file(img/dim_screen.png img/dim_screen.png COPYONLY)
-configure_file(img/instructions.png img/instructions.png COPYONLY)
+configure_file(resources/images/tetromino.png resources/images/tetromino.png COPYONLY)
+configure_file(resources/images/tetromino_ghost.png resources/images/tetromino_ghost.png COPYONLY)
+configure_file(resources/images/board.png resources/images/board.png COPYONLY)
+configure_file(resources/images/dim_screen.png resources/images/dim_screen.png COPYONLY)
+configure_file(resources/images/instructions.png resources/images/instructions.png COPYONLY)
 
-configure_file(fnt/ubuntu-font-family-0.83/Ubuntu-R.ttf ./fnt/ubuntu-font-family-0.83/Ubuntu-R.ttf COPYONLY)
+configure_file(resources/fonts/ubuntu-font-family-0.83/Ubuntu-R.ttf resources/fonts/ubuntu-font-family-0.83/Ubuntu-R.ttf COPYONLY)
