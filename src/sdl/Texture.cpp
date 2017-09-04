@@ -7,7 +7,7 @@
 
 using namespace SDL;
 
-Texture Texture::load(SDL_Renderer *sdl_renderer, std::string path) {
+Texture Texture::load(const SDL::Renderer *renderer, std::string path) {
     SDL_Texture *sdl_texture = NULL;
 
     // Load image at specified path
@@ -17,9 +17,9 @@ Texture Texture::load(SDL_Renderer *sdl_renderer, std::string path) {
     }
 
     // Create texture from surface pixels
-    sdl_texture = SDL_CreateTextureFromSurface(sdl_renderer, loaded_surface);
+    sdl_texture = SDL_CreateTextureFromSurface(renderer->get(), loaded_surface);
     if (sdl_texture == NULL) {
-        throw SdlError("Unable to create texture from " + path);
+        throw SdlError("Unable to create texture from surface from " + path);
     }
 
     // Get image dimensions
@@ -32,17 +32,18 @@ Texture Texture::load(SDL_Renderer *sdl_renderer, std::string path) {
     return Texture(sdl_texture, width, height);
 }
 
-Texture Texture::fromText(SDL_Renderer *sdl_renderer, TTF_Font *font,
+// TODO: Maybe move to renderer
+Texture Texture::fromText(const Renderer &renderer, const Font &font,
                           std::string text,
                           SDL_Color color) {
     // Render text surface
-    SDL_Surface *text_surface = TTF_RenderUTF8_Blended(font, text.c_str(), color);
+    SDL_Surface *text_surface = TTF_RenderUTF8_Blended(font.get(), text.c_str(), color);
     if (text_surface == NULL) {
         throw SdlTtfError("Unable to render text surface!");
     }
 
     // Create texture from surface pixels
-    SDL_Texture *sdl_texture = SDL_CreateTextureFromSurface(sdl_renderer, text_surface);
+    SDL_Texture *sdl_texture = SDL_CreateTextureFromSurface(renderer.get(), text_surface);
     if (sdl_texture == NULL) {
         throw SdlError("Unable to create texture from rendered text!");
     }
@@ -57,11 +58,9 @@ Texture Texture::fromText(SDL_Renderer *sdl_renderer, TTF_Font *font,
     return Texture(sdl_texture, width, height);
 }
 
-Texture::Texture() : sdl_texture(nullptr, &SDL_DestroyTexture), width(0), height(0) {}
-
 Texture::Texture(SDL_Texture *sdl_texture, int width, int height) :
         width(width), height(height), sdl_texture(sdl_texture, &SDL_DestroyTexture) {}
 
-SDL_Texture *Texture::getSdlTexture() const {
+SDL_Texture *Texture::get() const {
     return sdl_texture.get();
 }

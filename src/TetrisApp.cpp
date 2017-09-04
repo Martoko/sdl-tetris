@@ -3,6 +3,31 @@
 #include "TetrisApp.hpp"
 
 TetrisApp::TetrisApp() {
+    const Resources::FontNameAndSize fonts_to_load[] = {
+            {"ubuntu-font-family-0.83/Ubuntu-R.ttf", 20},
+            {"ubuntu-font-family-0.83/Ubuntu-R.ttf", 44},
+    };
+
+    for (auto &&font_name_and_size : fonts_to_load) {
+        Resources::loadFont(font_name_and_size.name, font_name_and_size.size);
+    }
+
+    window = new TetrisWindow();
+
+    const std::string images_to_load[] = {
+            "tetromino.png",
+            "board.png",
+            "tetromino_ghost.png",
+            "dim_screen.png",
+            "instructions.png",
+    };
+
+    for (auto &&image_path : images_to_load) {
+        Resources::loadImage(*window, image_path);
+    }
+
+
+    ghost_tetromino = std::make_unique<Tetromino>(0, 0, 0);
     restartGame();
 }
 
@@ -43,47 +68,47 @@ void TetrisApp::step() {
 }
 
 void TetrisApp::draw() {
-    window.drawBackground();
+    window->drawBackground();
 
     if (show_instructions) {
-        window.drawInstructions();
-        window.renderToScreen();
+        window->drawInstructions();
+        window->renderToScreen();
         return;
     }
 
-    window.drawScoreValue(score);
-    window.drawLevelValue(level);
+    window->drawScoreValue(score);
+    window->drawLevelValue(level);
 
     if (!paused || game_over) {
-        window.drawBoard(board);
+        window->drawBoard(board);
     }
 
     if (hold_tetromino != nullptr && !game_over && !paused) {
-        window.drawHold(hold_tetromino.get());
+        window->drawHold(hold_tetromino.get());
     }
 
     if (!game_over && !paused) {
         for (int i = 0; i < 3; ++i) {
             Tetromino *tetromino = new Tetromino(0, 0, bag.peekFront((unsigned long) i));
-            window.drawNext(tetromino, i);
+            window->drawNext(tetromino, i);
             delete tetromino;
         }
     }
 
     if (current_tetromino != nullptr && !paused) {
-        window.draw(current_tetromino.get());
+        window->draw(current_tetromino.get());
     }
     if (current_tetromino != nullptr && !paused) {
-        window.drawGhost(ghost_tetromino.get());
+        window->drawGhost(ghost_tetromino.get());
     }
 
     if (game_over) {
-        window.drawGameOver(score);
+        window->drawGameOver(score);
     } else if (paused) {
-        window.drawPause();
+        window->drawPause();
     }
 
-    window.renderToScreen();
+    window->renderToScreen();
 }
 
 void TetrisApp::propagateEvents() {
@@ -392,4 +417,9 @@ void TetrisApp::restartGame() {
     current_tetromino = newTetrominoFromBag();
     resetGhost();
     gravity_timer.reset();
+}
+
+TetrisApp::~TetrisApp() {
+    delete window;
+    Resources::clear();
 }

@@ -11,21 +11,17 @@
 #include "sdl/Timer.hpp"
 #include "Tetromino.hpp"
 #include "sdl/Font.hpp"
+#include "engine/Resources.hpp"
 
 const int BOARD_WIDTH = 264;
 const int BOARD_HEIGHT = 402;
 
 class TetrisWindow : public SDL::Window {
-    SDL::Texture tetromino_texture;
-    SDL::Texture board_texture;
-    SDL::Texture ghost_texture;
-    SDL::Texture dim_screen_texture;
-    SDL::Texture instructions_texture;
+    const SDL::Font *ubuntu_regular_20;
+    const SDL::Font *ubuntu_regular_44;
+
     SDL::Texture game_over_title_text;
     SDL::Texture game_over_description_text;
-
-    SDL::Font ubuntu_regular_20;
-    SDL::Font ubuntu_regular_44;
     SDL::Texture score_text_texture;
     SDL::Texture next_text_texture;
     SDL::Texture hold_text_texture;

@@ -12,11 +12,9 @@ namespace SDL {
     public:
         static Font load(std::string path, int point_size);
 
-        Font();
-
         Font(TTF_Font *sdl_ttf_font);
 
-        TTF_Font *getSdlFont() const;
+        TTF_Font *get() const;
     };
 
 }

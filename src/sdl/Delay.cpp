@@ -1,4 +1,3 @@
-#include <SDL_timer.h>
 #include "Delay.hpp"
 
 using namespace SDL;

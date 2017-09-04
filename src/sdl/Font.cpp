@@ -15,10 +15,8 @@ Font Font::load(std::string path, int point_size) {
     return Font(sdl_ttf_font);
 }
 
-Font::Font() : sdl_ttf_font(nullptr, &TTF_CloseFont) {}
-
 Font::Font(TTF_Font *sdl_ttf_font) : sdl_ttf_font(sdl_ttf_font, &TTF_CloseFont) {}
 
-TTF_Font *Font::getSdlFont() const {
+TTF_Font *Font::get() const {
     return sdl_ttf_font.get();
 }

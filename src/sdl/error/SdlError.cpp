@@ -1,8 +1,11 @@
+#include <iostream>
 #include "SdlError.hpp"
 
 SdlError::SdlError(std::string msg) {
     this->msg = msg;
-    msg.append(SDL_GetError());
+    this->msg.append(". SDL_Error: ");
+    this->msg.append(SDL_GetError());
+    SDL_ClearError();
 }
 
 const char *SdlError::what() const noexcept {

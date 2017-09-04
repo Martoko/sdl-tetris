@@ -1,10 +1,24 @@
 #include <stdexcept>
 #include "Tetromino.hpp"
+#include "engine/Resources.hpp"
 
 std::vector<std::vector<std::vector<Piece>>> Tetromino::all_pieces = createListOfAllPieces();
 
 Tetromino::Tetromino(int x, int y, int color) : color(color), x(x), y(y) {
     loadPieces();
+
+    texture = Resources::getTexture("tetromino.png");
+}
+
+void Tetromino::draw(SDL_Renderer *sdl_renderer) {
+    for (unsigned int i = 0; i < 4; ++i) {
+        int piece_x = getPieceX(i);
+        int piece_y = getPieceY(i);
+
+        SDL_Rect src_rect = {18 * color, 0, 18, 18};
+        SDL_Rect dst_rect = {piece_x, piece_y, 18, 18};
+        SDL_RenderCopy(sdl_renderer, texture->get(), &src_rect, &dst_rect);
+    }
 }
 
 void Tetromino::loadPieces() {
@@ -13,32 +27,9 @@ void Tetromino::loadPieces() {
     }
 }
 
-int Tetromino::getColor() const {
-    return color;
-}
-
-int Tetromino::getX() const {
-    return x;
-}
-
-int Tetromino::getY() const {
-    return y;
-}
-
-int Tetromino::getPieceX(unsigned int i) const {
-    if (i >= 4) {
-        throw new std::runtime_error("Invalid index");
-    }
-
-    return x + pieces[i].x;
-}
-
-int Tetromino::getPieceY(unsigned int i) const {
-    if (i >= 4) {
-        throw new std::runtime_error("Invalid index");
-    }
-
-    return y + pieces[i].y;
+void Tetromino::move(int dx, int dy) {
+    x += dx;
+    y += dy;
 }
 
 bool Tetromino::collidesWithBoard(int (*board)[24]) {
@@ -52,11 +43,6 @@ bool Tetromino::collidesWithBoard(int (*board)[24]) {
     }
 
     return false;
-}
-
-void Tetromino::move(int dx, int dy) {
-    x += dx;
-    y += dy;
 }
 
 bool Tetromino::outOfBounds(const int min_x, const int max_x, const int max_y) {
@@ -86,6 +72,34 @@ void Tetromino::rotate(int delta_rotation) {
     }
 
     loadPieces();
+}
+
+int Tetromino::getColor() const {
+    return color;
+}
+
+int Tetromino::getX() const {
+    return x;
+}
+
+int Tetromino::getY() const {
+    return y;
+}
+
+int Tetromino::getPieceX(unsigned int i) const {
+    if (i >= 4) {
+        throw new std::runtime_error("Invalid index");
+    }
+
+    return x + pieces[i].x;
+}
+
+int Tetromino::getPieceY(unsigned int i) const {
+    if (i >= 4) {
+        throw new std::runtime_error("Invalid index");
+    }
+
+    return y + pieces[i].y;
 }
 
 void Tetromino::setX(int x) {

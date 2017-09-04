@@ -4,23 +4,29 @@
 #include <SDL.h>
 #include <string>
 #include <memory>
-
-typedef std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)> WindowPointer;
-typedef std::unique_ptr<SDL_Renderer, decltype(&SDL_DestroyRenderer)> RendererPointer;
+#include "Renderer.hpp"
 
 namespace SDL {
 
+    typedef std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)> SdlWindowPointer;
+
     class Window {
     protected:
-        WindowPointer sdl_window = WindowPointer(nullptr, &SDL_DestroyWindow);
-        RendererPointer sdl_renderer = RendererPointer(nullptr, &SDL_DestroyRenderer);
-
-        void clearScreen();
+        SdlWindowPointer sdl_window;
+        SDL::Renderer renderer;
 
     public:
         Window(std::string name = "SDL Window", int width = 600, int height = 400);
 
         void renderToScreen();
+
+        const Renderer &getRenderer() const;
+
+
+    private:
+        static SDL_Window *createSdlWindow(std::string name, int width, int height);
+
+        static SDL_Renderer *createSdlRendererFromSdlWindow(SDL_Window *sdl_window);
     };
 
 }

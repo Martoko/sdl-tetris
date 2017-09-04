@@ -4,18 +4,22 @@
 #include <vector>
 #include "Piece.hpp"
 #include "Pieces.hpp"
+#include "sdl/Texture.hpp"
+#include "engine/Sprite.hpp"
 
-class Tetromino {
+class Tetromino : public Sprite {
     Piece pieces[4];
     int color;
     int x, y;
     int rotation = 0;
     static std::vector<std::vector<std::vector<Piece>>> all_pieces;
+    const SDL::Texture *texture = nullptr;
 
 
 public:
 
     Tetromino(int x, int y, int color);
+
 
     int getColor() const;
 
@@ -46,6 +50,8 @@ public:
     void rotate(int delta_rotation);
 
     void loadPieces();
+
+    void draw(SDL_Renderer *sdl_renderer) override;
 };
 
 #endif //TETRIS_CPP_SDL2_TETROMINO_HPP

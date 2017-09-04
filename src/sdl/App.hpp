@@ -1,9 +1,11 @@
 #ifndef TETRIS_CPP_SDL2_APP_HPP
 #define TETRIS_CPP_SDL2_APP_HPP
 
+#include "../language/NonCopyableMoveable.hpp"
+
 namespace SDL {
 
-    class App {
+    class App : NonCopyableMoveable {
     public:
         App();
 

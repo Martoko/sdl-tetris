@@ -5,9 +5,10 @@
 #include "sdl/App.hpp"
 #include "TetrisWindow.hpp"
 #include "TetrominoBag.hpp"
+#include "engine/Stage.hpp"
 
 class TetrisApp : public SDL::App {
-    TetrisWindow window;
+    TetrisWindow *window;
     bool should_quit = false;
     bool game_over = false;
     SDL::Timer gravity_timer;
@@ -15,7 +16,7 @@ class TetrisApp : public SDL::App {
     const int GRAVITY_FAST_DELAY = 100;
     int gravity_delay = GRAVITY_NORMAL_DELAY;
     std::unique_ptr<Tetromino> current_tetromino;
-    std::unique_ptr<Tetromino> ghost_tetromino = std::make_unique<Tetromino>(0, 0, 0);
+    std::unique_ptr<Tetromino> ghost_tetromino;
     std::unique_ptr<Tetromino> hold_tetromino;
     int board[10][24];
     bool paused = true;
@@ -37,6 +38,8 @@ class TetrisApp : public SDL::App {
 
 public:
     TetrisApp();
+
+    virtual ~TetrisApp();
 
     void run();
 
