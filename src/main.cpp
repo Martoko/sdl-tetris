@@ -2,10 +2,10 @@
 
 
 int main(int argc, char *argv[]) {
-    TetrisApp *app = new TetrisApp();
-
     try {
+        TetrisApp *app = new TetrisApp();
         app->run();
+        delete app;
 
     } catch (std::exception &error) {
         printf("Error: %s\n", error.what());
@@ -16,6 +16,5 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    delete app;
     return 0;
 }

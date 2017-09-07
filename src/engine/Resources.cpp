@@ -42,7 +42,7 @@ namespace Resources {
         auto found = textures.find(name);
 
         if (found == textures.end()) {
-            throw std::runtime_error("Trying to load texture, that has not been preloaded "
+            throw std::runtime_error("Trying to get texture, that has not been preloaded "
                                              "resources/images/" + name);
         }
 
@@ -53,7 +53,7 @@ namespace Resources {
         auto found = fonts.find({name, point_size});
 
         if (found == fonts.end()) {
-            throw std::runtime_error("Trying to load font, that has not been preloaded "
+            throw std::runtime_error("Trying to get font, that has not been preloaded "
                                              "resources/fonts/" + name);
         }
 
