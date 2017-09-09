@@ -10,8 +10,7 @@ int main(int argc, char *argv[]) {
     } catch (std::exception &error) {
         printf("Error: %s\n", error.what());
 
-        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "An error occurred",
-                                 error.what(), NULL);
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "An error occurred", error.what(), NULL);
 
         return 1;
     }

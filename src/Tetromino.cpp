@@ -10,14 +10,14 @@ Tetromino::Tetromino(int x, int y, int color) : color(color), x(x), y(y) {
     texture = Resources::getTexture("tetromino.png");
 }
 
-void Tetromino::draw(SDL_Renderer *sdl_renderer) {
+void Tetromino::draw(SDL::Renderer *renderer) {
     for (unsigned int i = 0; i < 4; ++i) {
         int piece_x = getPieceX(i);
         int piece_y = getPieceY(i);
 
         SDL_Rect src_rect = {18 * color, 0, 18, 18};
         SDL_Rect dst_rect = {piece_x, piece_y, 18, 18};
-        SDL_RenderCopy(sdl_renderer, texture->get(), &src_rect, &dst_rect);
+        renderer->copy(texture, &src_rect, &dst_rect);
     }
 }
 

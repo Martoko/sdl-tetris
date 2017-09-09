@@ -5,7 +5,7 @@
 #include "sdl/App.hpp"
 #include "TetrisWindow.hpp"
 #include "TetrominoBag.hpp"
-#include "engine/Stage.hpp"
+#include "engine/ObjectList.hpp"
 
 class TetrisApp : public SDL::App {
     TetrisWindow *window;
