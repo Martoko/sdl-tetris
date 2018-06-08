@@ -17,8 +17,10 @@ const int BOARD_WIDTH = 264;
 const int BOARD_HEIGHT = 402;
 
 class TetrisWindow : public SDL::Window {
-    const SDL::Font *ubuntu_regular_20;
-    const SDL::Font *ubuntu_regular_44;
+    const SDL::Font ubuntu_regular_20 = SDL::Font::load(
+            "resources/fonts/ubuntu-font-family-0.83/Ubuntu-R.ttf", 20);
+    const SDL::Font ubuntu_regular_44 = SDL::Font::load(
+            "resources/fonts/ubuntu-font-family-0.83/Ubuntu-R.ttf", 44);
 
     SDL::Texture game_over_title_text;
     SDL::Texture game_over_description_text;

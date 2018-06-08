@@ -9,9 +9,10 @@ namespace SDL {
     public:
         App();
 
-        virtual ~App();
+        ~App() override;
 
     private:
+        void seedRandomNumberGenerator() const;
 
         void initSdl();
 

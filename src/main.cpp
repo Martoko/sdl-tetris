@@ -3,9 +3,8 @@
 
 int main(int argc, char *argv[]) {
     try {
-        TetrisApp *app = new TetrisApp();
-        app->run();
-        delete app;
+        TetrisApp app;
+        app.run();
 
     } catch (std::exception &error) {
         printf("Error: %s\n", error.what());

@@ -8,8 +8,8 @@ using namespace SDL;
 Font Font::load(std::string path, int point_size) {
     TTF_Font *sdl_ttf_font = TTF_OpenFont(path.c_str(), point_size);
 
-    if (sdl_ttf_font == NULL) {
-        throw SdlTtfError("Failed to load font fonts/ubuntu-font-family-0.83/Ubuntu-R.ttf");
+    if (sdl_ttf_font == nullptr) {
+        throw SdlTtfError("Failed to load font " + path);
     }
 
     return Font(sdl_ttf_font);

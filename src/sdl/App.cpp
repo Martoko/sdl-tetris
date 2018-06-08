@@ -8,7 +8,7 @@
 using namespace SDL;
 
 App::App() {
-    srand((unsigned int) time(0));
+    seedRandomNumberGenerator();
 
     initSdl();
 
@@ -18,6 +18,8 @@ App::App() {
 
     initSdlTtf();
 }
+
+void App::seedRandomNumberGenerator() const { srand((unsigned int) time(nullptr)); }
 
 void App::initSdl() {
     int result = SDL_Init(SDL_INIT_VIDEO);

@@ -3,18 +3,16 @@
 
 TetrisWindow::TetrisWindow() :
         Window("Tetris", BOARD_WIDTH, BOARD_HEIGHT),
-        ubuntu_regular_20(Resources::getFont("ubuntu-font-family-0.83/Ubuntu-R.ttf", 20)),
-        ubuntu_regular_44(Resources::getFont("ubuntu-font-family-0.83/Ubuntu-R.ttf", 44)),
 
-        next_text_texture(SDL::Texture::fromText(renderer, *ubuntu_regular_20, "next")),
-        hold_text_texture(SDL::Texture::fromText(renderer, *ubuntu_regular_20, "hold")),
-        score_text_texture(SDL::Texture::fromText(renderer, *ubuntu_regular_20, "score")),
-        level_text_texture(SDL::Texture::fromText(renderer, *ubuntu_regular_20, "level")),
-        pause_text_texture(SDL::Texture::fromText(renderer, *ubuntu_regular_44,
+        next_text_texture(SDL::Texture::fromText(renderer, ubuntu_regular_20, "next")),
+        hold_text_texture(SDL::Texture::fromText(renderer, ubuntu_regular_20, "hold")),
+        score_text_texture(SDL::Texture::fromText(renderer, ubuntu_regular_20, "score")),
+        level_text_texture(SDL::Texture::fromText(renderer, ubuntu_regular_20, "level")),
+        pause_text_texture(SDL::Texture::fromText(renderer, ubuntu_regular_44,
                                                   "PAUSED", {255, 255, 255})),
-        game_over_title_text(SDL::Texture::fromText(renderer, *ubuntu_regular_44,
+        game_over_title_text(SDL::Texture::fromText(renderer, ubuntu_regular_44,
                                                     "GAME OVER", {255, 255, 255})),
-        game_over_description_text(SDL::Texture::fromText(renderer, *ubuntu_regular_20,
+        game_over_description_text(SDL::Texture::fromText(renderer, ubuntu_regular_20,
                                                           "press 'R' to restart",
                                                           {255, 255, 255})) {}
 
@@ -31,9 +29,9 @@ void TetrisWindow::drawGameOver(int score) {
     renderer.copy(Resources::getTexture("dim_screen.png"), &src_rect, &dst_rect);
 
     SDL::Texture your_score_text =
-            SDL::Texture::fromText(renderer, *ubuntu_regular_20, "score", {255, 255, 255});
+            SDL::Texture::fromText(renderer, ubuntu_regular_20, "score", {255, 255, 255});
     SDL::Texture score_value_text =
-            SDL::Texture::fromText(renderer, *ubuntu_regular_20, std::to_string(score),
+            SDL::Texture::fromText(renderer, ubuntu_regular_20, std::to_string(score),
                                    {255, 255, 255});
 
     const int SPACING = 20;
@@ -207,7 +205,7 @@ void TetrisWindow::drawGuiPiece(int color, int x, int y) {
 
 void TetrisWindow::drawScoreValue(int score) {
     SDL::Texture score_value_texture =
-            SDL::Texture::fromText(renderer, *ubuntu_regular_20, std::to_string(score));
+            SDL::Texture::fromText(renderer, ubuntu_regular_20, std::to_string(score));
 
     int width = score_value_texture.width;
     int height = score_value_texture.height;
@@ -219,7 +217,7 @@ void TetrisWindow::drawScoreValue(int score) {
 
 void TetrisWindow::drawLevelValue(int level) {
     SDL::Texture level_value_texture =
-            SDL::Texture::fromText(renderer, *ubuntu_regular_20, std::to_string(level));
+            SDL::Texture::fromText(renderer, ubuntu_regular_20, std::to_string(level));
 
     int width = level_value_texture.width;
     int height = level_value_texture.height;
