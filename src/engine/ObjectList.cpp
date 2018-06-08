@@ -8,7 +8,7 @@ void ObjectList::remove(Object *sprite) {
     objects.push_back(sprite);
 }
 
-void ObjectList::draw(SDL::Renderer *renderer) {
+void ObjectList::draw(SDL::Renderer &renderer) {
     for (auto &&object : objects) {
         object->x += x;
         object->y += y;

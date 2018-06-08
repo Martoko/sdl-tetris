@@ -13,12 +13,11 @@ class Tetromino : public Object {
     int x, y;
     int rotation = 0;
     static std::vector<std::vector<std::vector<Piece>>> all_pieces;
-    SDL::Texture *texture = nullptr;
-
+    SDL::Texture &texture;
 
 public:
 
-    Tetromino(int x, int y, int color);
+    Tetromino(int x, int y, int color, SDL::Texture &texture);
 
 
     int getColor() const;
@@ -51,7 +50,7 @@ public:
 
     void loadPieces();
 
-    void draw(SDL::Renderer *renderer) override;
+    void draw(SDL::Renderer &renderer) override;
 };
 
 #endif //TETRIS_CPP_SDL2_TETROMINO_HPP

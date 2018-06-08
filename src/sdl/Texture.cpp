@@ -8,17 +8,17 @@
 using namespace SDL;
 
 Texture Texture::load(const SDL::Renderer *renderer, std::string path) {
-    SDL_Texture *sdl_texture = NULL;
+    SDL_Texture *sdl_texture = nullptr;
 
     // Load image at specified path
     SDL_Surface *loaded_surface = IMG_Load(path.c_str());
-    if (loaded_surface == NULL) {
+    if (loaded_surface == nullptr) {
         throw SdlImgError("Unable to load image " + path);
     }
 
     // Create texture from surface pixels
     sdl_texture = SDL_CreateTextureFromSurface(renderer->get(), loaded_surface);
-    if (sdl_texture == NULL) {
+    if (sdl_texture == nullptr) {
         throw SdlError("Unable to create texture from surface from " + path);
     }
 
@@ -38,13 +38,13 @@ Texture Texture::fromText(const Renderer &renderer, const Font &font,
                           SDL_Color color) {
     // Render text surface
     SDL_Surface *text_surface = TTF_RenderUTF8_Blended(font.get(), text.c_str(), color);
-    if (text_surface == NULL) {
+    if (text_surface == nullptr) {
         throw SdlTtfError("Unable to render text surface!");
     }
 
     // Create texture from surface pixels
     SDL_Texture *sdl_texture = SDL_CreateTextureFromSurface(renderer.get(), text_surface);
-    if (sdl_texture == NULL) {
+    if (sdl_texture == nullptr) {
         throw SdlError("Unable to create texture from rendered text!");
     }
 

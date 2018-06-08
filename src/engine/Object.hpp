@@ -5,9 +5,10 @@
 
 class Object {
 public:
-    int x, y = 0;
+    int x = 0;
+    int y = 0;
 
-    virtual void draw(SDL::Renderer *sdl_renderer) = 0;
+    virtual void draw(SDL::Renderer &sdl_renderer) = 0;
 };
 
 

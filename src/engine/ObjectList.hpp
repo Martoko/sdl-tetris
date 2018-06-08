@@ -12,7 +12,7 @@ public:
 
     void remove(Object *sprite);
 
-    void draw(SDL::Renderer *renderer) override;
+    void draw(SDL::Renderer &renderer) override;
 };
 
 

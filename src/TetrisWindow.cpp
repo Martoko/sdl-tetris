@@ -2,31 +2,19 @@
 #include "TetrisWindow.hpp"
 
 TetrisWindow::TetrisWindow() :
-        Window("Tetris", BOARD_WIDTH, BOARD_HEIGHT),
-
-        next_text_texture(SDL::Texture::fromText(renderer, ubuntu_regular_20, "next")),
-        hold_text_texture(SDL::Texture::fromText(renderer, ubuntu_regular_20, "hold")),
-        score_text_texture(SDL::Texture::fromText(renderer, ubuntu_regular_20, "score")),
-        level_text_texture(SDL::Texture::fromText(renderer, ubuntu_regular_20, "level")),
-        pause_text_texture(SDL::Texture::fromText(renderer, ubuntu_regular_44,
-                                                  "PAUSED", {255, 255, 255})),
-        game_over_title_text(SDL::Texture::fromText(renderer, ubuntu_regular_44,
-                                                    "GAME OVER", {255, 255, 255})),
-        game_over_description_text(SDL::Texture::fromText(renderer, ubuntu_regular_20,
-                                                          "press 'R' to restart",
-                                                          {255, 255, 255})) {}
+        Window("Tetris", BOARD_WIDTH, BOARD_HEIGHT) {}
 
 void TetrisWindow::drawInstructions() {
     SDL_Rect src_rect = {0, 0, BOARD_WIDTH, BOARD_HEIGHT};
     SDL_Rect dst_rect = {0, 0, BOARD_WIDTH, BOARD_HEIGHT};
-    renderer.copy(Resources::getTexture("instructions.png"), &src_rect, &dst_rect);
+    renderer.copy(*Resources::getTexture("instructions.png"), src_rect, dst_rect);
 }
 
 void TetrisWindow::drawGameOver(int score) {
     // Draw game over images
     SDL_Rect src_rect = {0, 0, BOARD_WIDTH, BOARD_HEIGHT};
     SDL_Rect dst_rect = {0, 0, BOARD_WIDTH, BOARD_HEIGHT};
-    renderer.copy(Resources::getTexture("dim_screen.png"), &src_rect, &dst_rect);
+    renderer.copy(*Resources::getTexture("dim_screen.png"), src_rect, dst_rect);
 
     SDL::Texture your_score_text =
             SDL::Texture::fromText(renderer, ubuntu_regular_20, "score", {255, 255, 255});
@@ -45,7 +33,7 @@ void TetrisWindow::drawGameOver(int score) {
     src_rect = {0, 0, width, height};
     dst_rect = {(BOARD_WIDTH / 2) - (width / 2), (BOARD_HEIGHT / 2) - (box_height / 2),
                 width, height};
-    renderer.copy(&game_over_title_text, &src_rect, &dst_rect);
+    renderer.copy(game_over_title_text, src_rect, dst_rect);
 
     // Draw score text
     width = your_score_text.width;
@@ -54,7 +42,7 @@ void TetrisWindow::drawGameOver(int score) {
     dst_rect = {(BOARD_WIDTH / 2) - (width / 2),
                 (BOARD_HEIGHT / 2) - (box_height / 2) + game_over_title_text.height,
                 width, height};
-    renderer.copy(&your_score_text, &src_rect, &dst_rect);
+    renderer.copy(your_score_text, src_rect, dst_rect);
 
     // Draw score value text
     width = score_value_text.width;
@@ -64,7 +52,7 @@ void TetrisWindow::drawGameOver(int score) {
                 (BOARD_HEIGHT / 2) - (box_height / 2) + game_over_title_text.height
                 + your_score_text.height,
                 width, height};
-    renderer.copy(&score_value_text, &src_rect, &dst_rect);
+    renderer.copy(score_value_text, src_rect, dst_rect);
 
     // Draw press r to restart text
     width = game_over_description_text.width;
@@ -74,50 +62,49 @@ void TetrisWindow::drawGameOver(int score) {
                 (BOARD_HEIGHT / 2) - (box_height / 2) + game_over_title_text.height
                 + your_score_text.height + your_score_text.height + SPACING,
                 width, height};
-    renderer.copy(&game_over_description_text, &src_rect,
-                  &dst_rect);
+    renderer.copy(game_over_description_text, src_rect, dst_rect);
 }
 
 void TetrisWindow::drawPause() {
     // Draw pause images
     SDL_Rect src_rect = {0, 0, BOARD_WIDTH, BOARD_HEIGHT};
     SDL_Rect dst_rect = {0, 0, BOARD_WIDTH, BOARD_HEIGHT};
-    renderer.copy(Resources::getTexture("dim_screen.png"), &src_rect, &dst_rect);
+    renderer.copy(*Resources::getTexture("dim_screen.png"), src_rect, dst_rect);
 
     // Draw pause text
     int width = pause_text_texture.width;
     int height = pause_text_texture.height;
     src_rect = {0, 0, width, height};
     dst_rect = {(BOARD_WIDTH / 2) - (width / 2), (BOARD_HEIGHT / 2) - (height / 2), width, height};
-    renderer.copy(&pause_text_texture, &src_rect, &dst_rect);
+    renderer.copy(pause_text_texture, src_rect, dst_rect);
 }
 
 void TetrisWindow::drawBackground() {
     // Draw board BG
     SDL_Rect src_rect = {0, 0, BOARD_WIDTH, BOARD_HEIGHT};
     SDL_Rect dst_rect = {0, 0, BOARD_WIDTH, BOARD_HEIGHT};
-    renderer.copy(Resources::getTexture("board.png"), &src_rect, &dst_rect);
+    renderer.copy(*Resources::getTexture("board.png"), src_rect, dst_rect);
 
     // Draw next text
     int width = next_text_texture.width;
     int height = next_text_texture.height;
     src_rect = {0, 0, width, height};
     dst_rect = {223 - (width / 2), 13 - (height / 2), width, height};
-    renderer.copy(&next_text_texture, &src_rect, &dst_rect);
+    renderer.copy(next_text_texture, src_rect, dst_rect);
 
     // Draw score text
     width = score_text_texture.width;
     height = score_text_texture.height;
     src_rect = {0, 0, width, height};
     dst_rect = {223 - (width / 2), 200 - (height / 2), width, height};
-    renderer.copy(&score_text_texture, &src_rect, &dst_rect);
+    renderer.copy(score_text_texture, src_rect, dst_rect);
 
     // Draw level text
     width = level_text_texture.width;
     height = level_text_texture.height;
     src_rect = {0, 0, width, height};
     dst_rect = {223 - (width / 2), 260 - (height / 2), width, height};
-    renderer.copy(&level_text_texture, &src_rect, &dst_rect);
+    renderer.copy(level_text_texture, src_rect, dst_rect);
 }
 
 void TetrisWindow::drawBoard(int (*board)[24]) {
@@ -144,7 +131,7 @@ void TetrisWindow::drawGhostPiece(int color, int x, int y) {
     y -= 2;
     SDL_Rect src_rect = {18 * color, 0, 18, 18};
     SDL_Rect dst_rect = {x * 18 + 1 + 2, y * 18 + 1 + 2, 18, 18};
-    renderer.copy(Resources::getTexture("tetromino_ghost.png"), &src_rect, &dst_rect);
+    renderer.copy(*Resources::getTexture("tetromino_ghost.png"), src_rect, dst_rect);
 }
 
 void TetrisWindow::draw(Tetromino *tetromino) {
@@ -161,7 +148,7 @@ void TetrisWindow::drawPiece(int color, int x, int y) {
     y -= 2;
     SDL_Rect src_rect = {18 * color, 0, 18, 18};
     SDL_Rect dst_rect = {x * 18 + 1 + 2, y * 18 + 1 + 2, 18, 18};
-    renderer.copy(Resources::getTexture("tetromino.png"), &src_rect, &dst_rect);
+    renderer.copy(*Resources::getTexture("tetromino.png"), src_rect, dst_rect);
 }
 
 void TetrisWindow::drawNext(Tetromino *tetromino, int index) {
@@ -174,7 +161,7 @@ void TetrisWindow::drawHold(Tetromino *tetromino) {
     int height = hold_text_texture.height;
     SDL_Rect src_rect = {0, 0, width, height};
     SDL_Rect dst_rect = {223 - (width / 2), 325 - (height / 2), width, height};
-    renderer.copy(&hold_text_texture, &src_rect, &dst_rect);
+    renderer.copy(hold_text_texture, src_rect, dst_rect);
 
     drawGui(tetromino, 188, 351);
 }
@@ -200,7 +187,7 @@ void TetrisWindow::drawGui(Tetromino *tetromino, int anchor_x, int anchor_y) {
 void TetrisWindow::drawGuiPiece(int color, int x, int y) {
     SDL_Rect src_rect = {18 * color, 0, 18, 18};
     SDL_Rect dst_rect = {x, y, 18, 18};
-    renderer.copy(Resources::getTexture("tetromino.png"), &src_rect, &dst_rect);
+    renderer.copy(*Resources::getTexture("tetromino.png"), src_rect, dst_rect);
 }
 
 void TetrisWindow::drawScoreValue(int score) {
@@ -211,7 +198,7 @@ void TetrisWindow::drawScoreValue(int score) {
     int height = score_value_texture.height;
     SDL_Rect src_rect = {0, 0, width, height};
     SDL_Rect dst_rect = {223 - (width / 2), 224 - (height / 2), width, height};
-    renderer.copy(&score_value_texture, &src_rect, &dst_rect);
+    renderer.copy(score_value_texture, src_rect, dst_rect);
 
 }
 
@@ -223,5 +210,5 @@ void TetrisWindow::drawLevelValue(int level) {
     int height = level_value_texture.height;
     SDL_Rect src_rect = {0, 0, width, height};
     SDL_Rect dst_rect = {223 - (width / 2), 284 - (height / 2), width, height};
-    renderer.copy(&level_value_texture, &src_rect, &dst_rect);
+    renderer.copy(level_value_texture, src_rect, dst_rect);
 }

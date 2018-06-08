@@ -22,13 +22,21 @@ class TetrisWindow : public SDL::Window {
     const SDL::Font ubuntu_regular_44 = SDL::Font::load(
             "resources/fonts/ubuntu-font-family-0.83/Ubuntu-R.ttf", 44);
 
-    SDL::Texture game_over_title_text;
-    SDL::Texture game_over_description_text;
-    SDL::Texture score_text_texture;
-    SDL::Texture next_text_texture;
-    SDL::Texture hold_text_texture;
-    SDL::Texture pause_text_texture;
-    SDL::Texture level_text_texture;
+    SDL::Texture next_text_texture =
+            SDL::Texture::fromText(renderer, ubuntu_regular_20, "next");
+    SDL::Texture hold_text_texture =
+            SDL::Texture::fromText(renderer, ubuntu_regular_20, "hold");
+    SDL::Texture score_text_texture =
+            SDL::Texture::fromText(renderer, ubuntu_regular_20, "score");
+    SDL::Texture level_text_texture =
+            SDL::Texture::fromText(renderer, ubuntu_regular_20, "level");
+    SDL::Texture pause_text_texture =
+            SDL::Texture::fromText(renderer, ubuntu_regular_44, "PAUSED", {255, 255, 255});
+    SDL::Texture game_over_title_text =
+            SDL::Texture::fromText(renderer, ubuntu_regular_44, "GAME OVER", {255, 255, 255});
+    SDL::Texture game_over_description_text =
+            SDL::Texture::fromText(renderer, ubuntu_regular_20, "press 'R' to restart",
+                                   {255, 255, 255});
 
 public:
     TetrisWindow();

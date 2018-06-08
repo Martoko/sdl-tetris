@@ -21,7 +21,7 @@ namespace SDL {
 
         SDL_Renderer *get() const;
 
-        void copy(SDL::Texture *texture, SDL_Rect *src_rect, SDL_Rect *dst_rect);
+        void copy(SDL::Texture &texture, SDL_Rect &src_rect, SDL_Rect &dst_rect);
 
     private:
         void clear();

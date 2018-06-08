@@ -4,20 +4,19 @@
 
 std::vector<std::vector<std::vector<Piece>>> Tetromino::all_pieces = createListOfAllPieces();
 
-Tetromino::Tetromino(int x, int y, int color) : color(color), x(x), y(y) {
+Tetromino::Tetromino(int x, int y, int color, SDL::Texture &texture) :
+        color(color), x(x), y(y), texture(texture) {
     loadPieces();
-
-    texture = Resources::getTexture("tetromino.png");
 }
 
-void Tetromino::draw(SDL::Renderer *renderer) {
+void Tetromino::draw(SDL::Renderer &renderer) {
     for (unsigned int i = 0; i < 4; ++i) {
         int piece_x = getPieceX(i);
         int piece_y = getPieceY(i);
 
         SDL_Rect src_rect = {18 * color, 0, 18, 18};
         SDL_Rect dst_rect = {piece_x, piece_y, 18, 18};
-        renderer->copy(texture, &src_rect, &dst_rect);
+        renderer.copy(texture, src_rect, dst_rect);
     }
 }
 
@@ -88,7 +87,7 @@ int Tetromino::getY() const {
 
 int Tetromino::getPieceX(unsigned int i) const {
     if (i >= 4) {
-        throw new std::runtime_error("Invalid index");
+        throw std::runtime_error("Invalid index");
     }
 
     return x + pieces[i].x;
@@ -96,7 +95,7 @@ int Tetromino::getPieceX(unsigned int i) const {
 
 int Tetromino::getPieceY(unsigned int i) const {
     if (i >= 4) {
-        throw new std::runtime_error("Invalid index");
+        throw std::runtime_error("Invalid index");
     }
 
     return y + pieces[i].y;
