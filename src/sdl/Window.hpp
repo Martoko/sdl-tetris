@@ -9,7 +9,7 @@ namespace SDL {
 
     typedef std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)> SdlWindowPointer;
 
-    class Window {
+    class Window final {
     protected:
         SdlWindowPointer sdl_window;
         SDL::Renderer renderer;

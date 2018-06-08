@@ -3,13 +3,12 @@
 #include "sdl/App.hpp"
 #include "TetrisGame.hpp"
 
-class TetrisApp : public SDL::App {
-    TetrisGame *game;
+class TetrisApp {
+    SDL::App app;
+    TetrisGame game;
 
 public:
-    TetrisApp();
-
     void run();
 
-    ~TetrisApp() override;
+    virtual ~TetrisApp();
 };

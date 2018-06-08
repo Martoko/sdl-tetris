@@ -2,7 +2,7 @@
 
 namespace SDL {
 
-    class Timer {
+    class Timer final {
         Uint32 start_ticks;
 
     public:

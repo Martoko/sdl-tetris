@@ -14,30 +14,36 @@
 const int BOARD_WIDTH = 264;
 const int BOARD_HEIGHT = 402;
 
-class TetrisWindow : public SDL::Window {
+class TetrisWindow {
     const SDL::Font ubuntu_regular_20 = SDL::Font::load(
             "resources/fonts/ubuntu-font-family-0.83/Ubuntu-R.ttf", 20);
     const SDL::Font ubuntu_regular_44 = SDL::Font::load(
             "resources/fonts/ubuntu-font-family-0.83/Ubuntu-R.ttf", 44);
 
+    SDL::Window window = SDL::Window("Tetris", BOARD_WIDTH, BOARD_HEIGHT);
+
     SDL::Texture next_text_texture =
-            SDL::Texture::fromText(renderer, ubuntu_regular_20, "next");
+            SDL::Texture::fromText(window.getRenderer(), ubuntu_regular_20, "next");
     SDL::Texture hold_text_texture =
-            SDL::Texture::fromText(renderer, ubuntu_regular_20, "hold");
+            SDL::Texture::fromText(window.getRenderer(), ubuntu_regular_20, "hold");
     SDL::Texture score_text_texture =
-            SDL::Texture::fromText(renderer, ubuntu_regular_20, "score");
+            SDL::Texture::fromText(window.getRenderer(), ubuntu_regular_20, "score");
     SDL::Texture level_text_texture =
-            SDL::Texture::fromText(renderer, ubuntu_regular_20, "level");
+            SDL::Texture::fromText(window.getRenderer(), ubuntu_regular_20, "level");
     SDL::Texture pause_text_texture =
-            SDL::Texture::fromText(renderer, ubuntu_regular_44, "PAUSED", {255, 255, 255});
+            SDL::Texture::fromText(window.getRenderer(), ubuntu_regular_44, "PAUSED",
+                                   {255, 255, 255});
     SDL::Texture game_over_title_text =
-            SDL::Texture::fromText(renderer, ubuntu_regular_44, "GAME OVER", {255, 255, 255});
+            SDL::Texture::fromText(window.getRenderer(), ubuntu_regular_44, "GAME OVER",
+                                   {255, 255, 255});
     SDL::Texture game_over_description_text =
-            SDL::Texture::fromText(renderer, ubuntu_regular_20, "press 'R' to restart",
+            SDL::Texture::fromText(window.getRenderer(), ubuntu_regular_20, "press 'R' to restart",
                                    {255, 255, 255});
 
 public:
     TetrisWindow();
+
+    void renderToScreen();
 
     void drawBoard(int board[10][24]);
 

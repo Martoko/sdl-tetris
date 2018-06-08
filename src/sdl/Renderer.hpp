@@ -10,7 +10,7 @@ namespace SDL {
 
     typedef std::unique_ptr<SDL_Renderer, decltype(&SDL_DestroyRenderer)> SdlRendererPointer;
 
-    class Renderer {
+    class Renderer final {
         SdlRendererPointer sdl_renderer;
 
     public:
@@ -20,7 +20,7 @@ namespace SDL {
 
         SDL_Renderer *get() const;
 
-        void copy(SDL::Texture &texture, SDL_Rect &src_rect, SDL_Rect &dst_rect);
+        void copy(SDL::Texture &texture, SDL_Rect &src_rect, SDL_Rect &dst_rect) const;
 
     private:
         void clear();

@@ -4,7 +4,7 @@
 
 namespace SDL {
 
-    class App : NonCopyableMoveable {
+    class App final : NonCopyableMoveable {
     public:
         App();
 

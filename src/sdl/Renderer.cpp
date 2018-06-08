@@ -36,7 +36,7 @@ namespace SDL {
         return sdl_renderer.get();
     }
 
-    void Renderer::copy(SDL::Texture &texture, SDL_Rect &src_rect, SDL_Rect &dst_rect) {
+    void Renderer::copy(SDL::Texture &texture, SDL_Rect &src_rect, SDL_Rect &dst_rect) const {
         int result = SDL_RenderCopy(sdl_renderer.get(), texture.get(), &src_rect, &dst_rect);
         if (result == -1) {
             throw SdlError();

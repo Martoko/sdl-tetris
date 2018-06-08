@@ -1,19 +1,6 @@
 #include "TetrisGame.hpp"
 
 TetrisGame::TetrisGame() {
-    const std::string images_to_load[] = {
-            "tetromino.png",
-            "board.png",
-            "tetromino_ghost.png",
-            "dim_screen.png",
-            "instructions.png",
-    };
-
-    for (auto &&image_path : images_to_load) {
-        Resources::loadImage(window, image_path);
-    }
-
-
     ghost_tetromino = std::make_unique<Tetromino>(0, 0, 0);
     restartGame();
 }
