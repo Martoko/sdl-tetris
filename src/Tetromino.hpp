@@ -4,10 +4,9 @@
 #include "Piece.hpp"
 #include "Pieces.hpp"
 #include "sdl/Texture.hpp"
-#include "engine/Object.hpp"
 #include "engine/Resources.hpp"
 
-class Tetromino : public Object {
+class Tetromino {
     Piece pieces[4];
     int color;
     int x, y;
@@ -41,11 +40,9 @@ public:
 
     void move(int dx, int dy);
 
-    bool outOfBounds(const int min_x, const int max_x, const int i);
+    bool outOfBounds(int min_x, int max_x, int i);
 
     void rotate(int delta_rotation);
 
     void updatePieces();
-
-    void draw(SDL::Renderer &renderer) override;
 };

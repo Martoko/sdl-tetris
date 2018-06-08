@@ -7,17 +7,6 @@ Tetromino::Tetromino(int x, int y, int color) : color(color), x(x), y(y) {
     updatePieces();
 }
 
-void Tetromino::draw(SDL::Renderer &renderer) {
-    for (unsigned int i = 0; i < 4; ++i) {
-        int piece_x = getPieceX(i);
-        int piece_y = getPieceY(i);
-
-        SDL_Rect src_rect = {18 * color, 0, 18, 18};
-        SDL_Rect dst_rect = {piece_x, piece_y, 18, 18};
-        renderer.copy(Resources::getTexture("tetromino.png"), src_rect, dst_rect);
-    }
-}
-
 void Tetromino::updatePieces() {
     for (int i = 0; i < 4; ++i) {
         pieces[i] = all_pieces[color][rotation][i];
