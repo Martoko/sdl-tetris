@@ -21,19 +21,6 @@ namespace Resources {
         ));
     }
 
-    void loadFont(std::string filename, int point_size) {
-        auto font = fonts.find({filename, point_size});
-
-        if (font != fonts.end()) {
-            throw std::runtime_error("Trying to load font twice resources/images/" + filename);
-        }
-
-        fonts.insert(std::map<FontNameAndSize, SDL::Font>::value_type(
-                {filename, point_size},
-                SDL::Font::load("resources/fonts/" + filename, point_size)
-        ));
-    }
-
     void loadImagesIn(const SDL::Window &window, std::string directory) {
         throw std::runtime_error("Not implemented");
     }
@@ -43,18 +30,7 @@ namespace Resources {
 
         if (found == textures.end()) {
             throw std::runtime_error("Trying to get texture, that has not been preloaded "
-                                             "resources/images/" + name);
-        }
-
-        return &found->second;
-    }
-
-    SDL::Font *getFont(std::string name, int point_size) {
-        auto found = fonts.find({name, point_size});
-
-        if (found == fonts.end()) {
-            throw std::runtime_error("Trying to get font, that has not been preloaded "
-                                             "resources/fonts/" + name);
+                                     "resources/images/" + name);
         }
 
         return &found->second;

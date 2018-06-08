@@ -3,15 +3,6 @@
 #include "TetrisApp.hpp"
 
 TetrisApp::TetrisApp() {
-    const Resources::FontNameAndSize fonts_to_load[] = {
-            {"ubuntu-font-family-0.83/Ubuntu-R.ttf", 20},
-            {"ubuntu-font-family-0.83/Ubuntu-R.ttf", 44},
-    };
-
-    for (auto &&font_name_and_size : fonts_to_load) {
-        Resources::loadFont(font_name_and_size.name, font_name_and_size.size);
-    }
-
     window = new TetrisWindow();
 
     const std::string images_to_load[] = {

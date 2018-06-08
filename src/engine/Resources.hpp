@@ -18,13 +18,9 @@ namespace Resources {
 
     void loadImage(const SDL::Window &window, std::string filename);
 
-    void loadFont(std::string filename, int point_size);
-
     void loadImagesIn(const SDL::Window &window, std::string directory);
 
     SDL::Texture *getTexture(std::string name);
-
-    SDL::Font *getFont(std::string name, int point_size);
 
     void clear();
 }
