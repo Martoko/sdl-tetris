@@ -107,16 +107,8 @@ void TetrisGame::propagateEvents() {
         } else if (event.type == SDL_KEYUP) {
             onKeyUp(event.key);
         } else if (event.type == SDL_WINDOWEVENT) {
-            switch (event.window.event) {
-                case SDL_WINDOWEVENT_FOCUS_LOST:
-                    paused = true;
-                    break;
-                case SDL_WINDOWEVENT_FOCUS_GAINED:
-                    paused = false;
-                    break;
-                default:
-                    break;
-            }
+            if (event.window.event == SDL_WINDOWEVENT_FOCUS_LOST) paused = true;
+            if (event.window.event == SDL_WINDOWEVENT_FOCUS_GAINED) paused = false;
         }
     }
 }
