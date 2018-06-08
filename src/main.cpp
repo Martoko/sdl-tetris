@@ -1,6 +1,5 @@
 #include "TetrisApp.hpp"
 
-
 int main(int argc, char *argv[]) {
     try {
         TetrisApp app;

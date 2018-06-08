@@ -1,5 +1,4 @@
-#ifndef TETRIS_CPP_SDL2_RESOURCES_HPP
-#define TETRIS_CPP_SDL2_RESOURCES_HPP
+#pragma once
 
 #include <string>
 #include "../sdl/Texture.hpp"
@@ -22,5 +21,3 @@ namespace Resources {
 
     void clear();
 }
-
-#endif //TETRIS_CPP_SDL2_RESOURCES_HPP

@@ -1,5 +1,4 @@
-#ifndef TETRIS_CPP_SDL2_OBJECT_HPP
-#define TETRIS_CPP_SDL2_OBJECT_HPP
+#pragma once
 
 #include "../sdl/Renderer.hpp"
 
@@ -10,6 +9,3 @@ public:
 
     virtual void draw(SDL::Renderer &sdl_renderer) = 0;
 };
-
-
-#endif //TETRIS_CPP_SDL2_OBJECT_HPP

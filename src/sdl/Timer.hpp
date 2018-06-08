@@ -1,5 +1,4 @@
-#ifndef TETRIS_CPP_SDL2_TIMER_HPP
-#define TETRIS_CPP_SDL2_TIMER_HPP
+#pragma once
 
 namespace SDL {
 
@@ -15,6 +14,3 @@ namespace SDL {
     };
 
 }
-
-
-#endif //TETRIS_CPP_SDL2_TIMER_HPP

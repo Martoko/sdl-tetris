@@ -1,5 +1,4 @@
-#ifndef TETRIS_CPP_SDL2_FONT_HPP
-#define TETRIS_CPP_SDL2_FONT_HPP
+#pragma once
 
 #include <string>
 #include <memory>
@@ -18,5 +17,3 @@ namespace SDL {
     };
 
 }
-
-#endif //TETRIS_CPP_SDL2_FONT_HPP

@@ -1,5 +1,4 @@
-#ifndef TETRIS_CPP_SDL2_SDLERROR_HPP
-#define TETRIS_CPP_SDL2_SDLERROR_HPP
+#pragma once
 
 #include <exception>
 #include <string>
@@ -17,6 +16,3 @@ public:
 
     const char *what() const noexcept override;
 };
-
-
-#endif //TETRIS_CPP_SDL2_SDLERROR_HPP

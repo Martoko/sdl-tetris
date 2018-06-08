@@ -1,5 +1,4 @@
-#ifndef TETRIS_CPP_SDL2_TEXTURE_HPP
-#define TETRIS_CPP_SDL2_TEXTURE_HPP
+#pragma once
 
 #include <string>
 #include <SDL.h>
@@ -29,5 +28,3 @@ namespace SDL {
     };
 
 }
-
-#endif //TETRIS_CPP_SDL2_TEXTURE_HPP

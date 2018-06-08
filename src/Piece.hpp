@@ -1,6 +1,4 @@
-#ifndef TETRIS_CPP_SDL2_PIECE_HPP
-#define TETRIS_CPP_SDL2_PIECE_HPP
-
+#pragma once
 
 class Piece {
 public:
@@ -10,6 +8,3 @@ public:
 
     Piece(int x, int y);
 };
-
-
-#endif //TETRIS_CPP_SDL2_PIECE_HPP

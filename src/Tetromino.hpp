@@ -1,5 +1,4 @@
-#ifndef TETRIS_CPP_SDL2_TETROMINO_HPP
-#define TETRIS_CPP_SDL2_TETROMINO_HPP
+#pragma once
 
 #include <vector>
 #include "Piece.hpp"
@@ -50,5 +49,3 @@ public:
 
     void draw(SDL::Renderer &renderer) override;
 };
-
-#endif //TETRIS_CPP_SDL2_TETROMINO_HPP

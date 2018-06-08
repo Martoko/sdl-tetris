@@ -1,5 +1,4 @@
-#ifndef TETRIS_CPP_SDL2_WINDOW_HPP
-#define TETRIS_CPP_SDL2_WINDOW_HPP
+#pragma once
 
 #include <SDL.h>
 #include <string>
@@ -30,5 +29,3 @@ namespace SDL {
     };
 
 }
-
-#endif //TETRIS_CPP_SDL2_WINDOW_HPP

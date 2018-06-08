@@ -1,5 +1,4 @@
-#ifndef TETRIS_CPP_SDL2_APP_HPP
-#define TETRIS_CPP_SDL2_APP_HPP
+#pragma once
 
 #include "../language/NonCopyableMoveable.hpp"
 
@@ -24,5 +23,3 @@ namespace SDL {
     };
 
 }
-
-#endif //TETRIS_CPP_SDL2_APP_HPP

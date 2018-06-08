@@ -1,6 +1,4 @@
-#ifndef TETRIS_CPP_SDL2_TETRISWINDOW_HPP
-#define TETRIS_CPP_SDL2_TETRISWINDOW_HPP
-
+#pragma once
 
 #include <vector>
 #include <memory>
@@ -71,6 +69,3 @@ public:
 
     void drawLevelValue(int level);
 };
-
-
-#endif //TETRIS_CPP_SDL2_TETRISWINDOW_HPP

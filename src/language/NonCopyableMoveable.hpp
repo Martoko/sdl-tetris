@@ -1,5 +1,4 @@
-#ifndef TETRIS_CPP_SDL2_NONCOPYABLE_HPP
-#define TETRIS_CPP_SDL2_NONCOPYABLE_HPP
+#pragma once
 
 class NonCopyableMoveable {
 protected:
@@ -17,6 +16,3 @@ protected:
 
     NonCopyableMoveable &operator=(NonCopyableMoveable &&other) = delete;
 };
-
-
-#endif //TETRIS_CPP_SDL2_NONCOPYABLE_HPP

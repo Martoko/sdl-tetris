@@ -1,5 +1,4 @@
-#ifndef TETRIS_CPP_SDL2_RENDERER_HPP
-#define TETRIS_CPP_SDL2_RENDERER_HPP
+#pragma once
 
 #include <SDL_render.h>
 #include <memory>
@@ -28,5 +27,3 @@ namespace SDL {
     };
 
 }
-
-#endif //TETRIS_CPP_SDL2_RENDERER_HPP

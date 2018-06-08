@@ -4,7 +4,6 @@
 #include "TetrisWindow.hpp"
 #include "TetrominoBag.hpp"
 
-
 class TetrisGame {
     bool should_quit = false;
     bool game_over = false;

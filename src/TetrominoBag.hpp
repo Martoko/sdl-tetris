@@ -1,6 +1,4 @@
-#ifndef TETRIS_CPP_SDL2_TETROMINOBAG_HPP
-#define TETRIS_CPP_SDL2_TETROMINOBAG_HPP
-
+#pragma once
 
 #include <vector>
 #include <queue>
@@ -23,6 +21,3 @@ private:
 
     void shuffleTetrominoColors();
 };
-
-
-#endif //TETRIS_CPP_SDL2_TETROMINOBAG_HPP
