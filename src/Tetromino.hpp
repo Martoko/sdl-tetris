@@ -6,6 +6,7 @@
 #include "Pieces.hpp"
 #include "sdl/Texture.hpp"
 #include "engine/Object.hpp"
+#include "engine/Resources.hpp"
 
 class Tetromino : public Object {
     Piece pieces[4];
@@ -13,12 +14,9 @@ class Tetromino : public Object {
     int x, y;
     int rotation = 0;
     static std::vector<std::vector<std::vector<Piece>>> all_pieces;
-    SDL::Texture &texture;
 
 public:
-
-    Tetromino(int x, int y, int color, SDL::Texture &texture);
-
+    Tetromino(int x, int y, int color);
 
     int getColor() const;
 
@@ -48,7 +46,7 @@ public:
 
     void rotate(int delta_rotation);
 
-    void loadPieces();
+    void updatePieces();
 
     void draw(SDL::Renderer &renderer) override;
 };

@@ -171,7 +171,7 @@ std::vector<std::vector<std::vector<Piece>>> createListOfAllPieces() {
             for (int y = 0; y < 4; ++y) {
                 for (int x = 0; x < 4; ++x) {
                     if (pieces_raw[color][rot][y][x] == 1) {
-                        rot_pieces.push_back(Piece(x, y));
+                        rot_pieces.emplace_back(Piece(x, y));
                     }
                 }
             }

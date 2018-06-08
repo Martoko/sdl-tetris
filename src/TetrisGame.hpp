@@ -6,17 +6,6 @@
 
 
 class TetrisGame {
-public:
-    TetrisWindow window;
-
-    TetrisGame();
-
-    void run();
-
-private:
-    SDL::Texture tetromino_texture =
-            SDL::Texture::load(&window.getRenderer(), "resources/images/tetromino.png");
-
     bool should_quit = false;
     bool game_over = false;
     SDL::Timer gravity_timer;
@@ -44,7 +33,14 @@ private:
     const int TETROMINO_START_X = 3;
     const int TETROMINO_START_Y = 2;
 
+public:
+    TetrisWindow window;
 
+    TetrisGame();
+
+    void run();
+
+private:
     void step();
 
     void propagateEvents();

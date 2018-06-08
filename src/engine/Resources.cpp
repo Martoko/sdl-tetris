@@ -21,19 +21,15 @@ namespace Resources {
         ));
     }
 
-    void loadImagesIn(const SDL::Window &window, std::string directory) {
-        throw std::runtime_error("Not implemented");
-    }
-
-    SDL::Texture *getTexture(std::string name) {
+    SDL::Texture &getTexture(std::string name) {
         auto found = textures.find(name);
 
         if (found == textures.end()) {
-            throw std::runtime_error("Trying to get texture, that has not been preloaded "
+            throw std::runtime_error("Trying to get texture, that has not been loaded "
                                      "resources/images/" + name);
         }
 
-        return &found->second;
+        return found->second;
     }
 
     void clear() {

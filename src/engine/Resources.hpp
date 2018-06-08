@@ -18,9 +18,7 @@ namespace Resources {
 
     void loadImage(const SDL::Window &window, std::string filename);
 
-    void loadImagesIn(const SDL::Window &window, std::string directory);
-
-    SDL::Texture *getTexture(std::string name);
+    SDL::Texture &getTexture(std::string name);
 
     void clear();
 }

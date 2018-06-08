@@ -7,14 +7,14 @@ TetrisWindow::TetrisWindow() :
 void TetrisWindow::drawInstructions() {
     SDL_Rect src_rect = {0, 0, BOARD_WIDTH, BOARD_HEIGHT};
     SDL_Rect dst_rect = {0, 0, BOARD_WIDTH, BOARD_HEIGHT};
-    renderer.copy(*Resources::getTexture("instructions.png"), src_rect, dst_rect);
+    renderer.copy(Resources::getTexture("instructions.png"), src_rect, dst_rect);
 }
 
 void TetrisWindow::drawGameOver(int score) {
     // Draw game over images
     SDL_Rect src_rect = {0, 0, BOARD_WIDTH, BOARD_HEIGHT};
     SDL_Rect dst_rect = {0, 0, BOARD_WIDTH, BOARD_HEIGHT};
-    renderer.copy(*Resources::getTexture("dim_screen.png"), src_rect, dst_rect);
+    renderer.copy(Resources::getTexture("dim_screen.png"), src_rect, dst_rect);
 
     SDL::Texture your_score_text =
             SDL::Texture::fromText(renderer, ubuntu_regular_20, "score", {255, 255, 255});
@@ -69,7 +69,7 @@ void TetrisWindow::drawPause() {
     // Draw pause images
     SDL_Rect src_rect = {0, 0, BOARD_WIDTH, BOARD_HEIGHT};
     SDL_Rect dst_rect = {0, 0, BOARD_WIDTH, BOARD_HEIGHT};
-    renderer.copy(*Resources::getTexture("dim_screen.png"), src_rect, dst_rect);
+    renderer.copy(Resources::getTexture("dim_screen.png"), src_rect, dst_rect);
 
     // Draw pause text
     int width = pause_text_texture.width;
@@ -83,7 +83,7 @@ void TetrisWindow::drawBackground() {
     // Draw board BG
     SDL_Rect src_rect = {0, 0, BOARD_WIDTH, BOARD_HEIGHT};
     SDL_Rect dst_rect = {0, 0, BOARD_WIDTH, BOARD_HEIGHT};
-    renderer.copy(*Resources::getTexture("board.png"), src_rect, dst_rect);
+    renderer.copy(Resources::getTexture("board.png"), src_rect, dst_rect);
 
     // Draw next text
     int width = next_text_texture.width;
@@ -131,7 +131,7 @@ void TetrisWindow::drawGhostPiece(int color, int x, int y) {
     y -= 2;
     SDL_Rect src_rect = {18 * color, 0, 18, 18};
     SDL_Rect dst_rect = {x * 18 + 1 + 2, y * 18 + 1 + 2, 18, 18};
-    renderer.copy(*Resources::getTexture("tetromino_ghost.png"), src_rect, dst_rect);
+    renderer.copy(Resources::getTexture("tetromino_ghost.png"), src_rect, dst_rect);
 }
 
 void TetrisWindow::draw(Tetromino *tetromino) {
@@ -148,7 +148,7 @@ void TetrisWindow::drawPiece(int color, int x, int y) {
     y -= 2;
     SDL_Rect src_rect = {18 * color, 0, 18, 18};
     SDL_Rect dst_rect = {x * 18 + 1 + 2, y * 18 + 1 + 2, 18, 18};
-    renderer.copy(*Resources::getTexture("tetromino.png"), src_rect, dst_rect);
+    renderer.copy(Resources::getTexture("tetromino.png"), src_rect, dst_rect);
 }
 
 void TetrisWindow::drawNext(Tetromino *tetromino, int index) {
@@ -187,7 +187,7 @@ void TetrisWindow::drawGui(Tetromino *tetromino, int anchor_x, int anchor_y) {
 void TetrisWindow::drawGuiPiece(int color, int x, int y) {
     SDL_Rect src_rect = {18 * color, 0, 18, 18};
     SDL_Rect dst_rect = {x, y, 18, 18};
-    renderer.copy(*Resources::getTexture("tetromino.png"), src_rect, dst_rect);
+    renderer.copy(Resources::getTexture("tetromino.png"), src_rect, dst_rect);
 }
 
 void TetrisWindow::drawScoreValue(int score) {

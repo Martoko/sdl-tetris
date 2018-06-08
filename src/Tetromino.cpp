@@ -1,12 +1,10 @@
 #include <stdexcept>
 #include "Tetromino.hpp"
-#include "engine/Resources.hpp"
 
 std::vector<std::vector<std::vector<Piece>>> Tetromino::all_pieces = createListOfAllPieces();
 
-Tetromino::Tetromino(int x, int y, int color, SDL::Texture &texture) :
-        color(color), x(x), y(y), texture(texture) {
-    loadPieces();
+Tetromino::Tetromino(int x, int y, int color) : color(color), x(x), y(y) {
+    updatePieces();
 }
 
 void Tetromino::draw(SDL::Renderer &renderer) {
@@ -16,11 +14,11 @@ void Tetromino::draw(SDL::Renderer &renderer) {
 
         SDL_Rect src_rect = {18 * color, 0, 18, 18};
         SDL_Rect dst_rect = {piece_x, piece_y, 18, 18};
-        renderer.copy(texture, src_rect, dst_rect);
+        renderer.copy(Resources::getTexture("tetromino.png"), src_rect, dst_rect);
     }
 }
 
-void Tetromino::loadPieces() {
+void Tetromino::updatePieces() {
     for (int i = 0; i < 4; ++i) {
         pieces[i] = all_pieces[color][rotation][i];
     }
@@ -70,7 +68,7 @@ void Tetromino::rotate(int delta_rotation) {
         rotation = 3;
     }
 
-    loadPieces();
+    updatePieces();
 }
 
 int Tetromino::getColor() const {
@@ -120,11 +118,11 @@ void Tetromino::setRotation(int rotation) {
     }
     Tetromino::rotation = rotation;
 
-    loadPieces();
+    updatePieces();
 }
 
 void Tetromino::setColor(int color) {
     Tetromino::color = color;
 
-    loadPieces();
+    updatePieces();
 }

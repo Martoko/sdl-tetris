@@ -14,15 +14,14 @@ TetrisGame::TetrisGame() {
     }
 
 
-    ghost_tetromino = std::make_unique<Tetromino>(0, 0, 0, tetromino_texture);
+    ghost_tetromino = std::make_unique<Tetromino>(0, 0, 0);
     restartGame();
 }
 
 std::unique_ptr<Tetromino> TetrisGame::newTetrominoFromBag() {
     int color = bag.popFront();
 
-    return std::make_unique<Tetromino>(TETROMINO_START_X, TETROMINO_START_Y, color,
-                                       tetromino_texture);
+    return std::make_unique<Tetromino>(TETROMINO_START_X, TETROMINO_START_Y, color);
 }
 
 void TetrisGame::run() {
@@ -77,18 +76,15 @@ void TetrisGame::draw() {
 
     if (!game_over && !paused) {
         for (int i = 0; i < 3; ++i) {
-            Tetromino *tetromino = new Tetromino(0, 0, bag.peekFront((unsigned long) i),
-                                                 tetromino_texture);
+            auto *tetromino = new Tetromino(0, 0, bag.peekFront((unsigned long) i));
             window.drawNext(tetromino, i);
             delete tetromino;
         }
     }
 
     if (current_tetromino != nullptr && !paused) {
-        window.draw(current_tetromino.get());
-    }
-    if (current_tetromino != nullptr && !paused) {
         window.drawGhost(ghost_tetromino.get());
+        window.draw(current_tetromino.get());
     }
 
     if (game_over) {
