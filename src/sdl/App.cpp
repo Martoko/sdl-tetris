@@ -33,7 +33,7 @@ void App::initSdl() {
 void App::initSdlImage() {
     int imgFlags = IMG_INIT_PNG;
     const int FAILURE = 0;
-    if (IMG_Init(imgFlags) & imgFlags == FAILURE) {
+    if ((IMG_Init(imgFlags) & imgFlags) == FAILURE) {
         throw SdlImgError("SDL_image could not initialize!");
     }
 }
