@@ -4,15 +4,13 @@
 
 namespace SDL {
 
-    class App final : NonCopyableMoveable {
+    class Sdl final : NonCopyableMoveable {
     public:
-        App();
+        Sdl();
 
-        ~App() override;
+        ~Sdl() override;
 
     private:
-        void seedRandomNumberGenerator() const;
-
         void initSdl();
 
         void setTextureFilteringToLinear();

@@ -1,5 +1,5 @@
-#include <stdexcept>
 #include "Tetromino.hpp"
+#include "Pieces.hpp"
 
 std::vector<std::vector<std::vector<Piece>>> Tetromino::all_pieces = createListOfAllPieces();
 

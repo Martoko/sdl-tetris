@@ -2,9 +2,6 @@
 
 #include <vector>
 #include "Piece.hpp"
-#include "Pieces.hpp"
-#include "sdl/Texture.hpp"
-#include "engine/Resources.hpp"
 
 class Tetromino {
     Piece pieces[4];

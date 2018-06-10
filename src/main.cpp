@@ -2,8 +2,8 @@
 
 int main(int argc, char *argv[]) {
     try {
-        TetrisApp app;
-        app.run();
+        TetrisApp game;
+        game.run();
 
     } catch (std::exception &error) {
         printf("Error: %s\n", error.what());

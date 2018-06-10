@@ -1,15 +1,13 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
-#include "App.hpp"
+#include "Sdl.hpp"
 #include "error/SdlError.hpp"
 #include "error/SdlImgError.hpp"
 #include "error/SdlTtfError.hpp"
 
 using namespace SDL;
 
-App::App() {
-    seedRandomNumberGenerator();
-
+Sdl::Sdl() {
     initSdl();
 
     setTextureFilteringToLinear();
@@ -19,9 +17,7 @@ App::App() {
     initSdlTtf();
 }
 
-void App::seedRandomNumberGenerator() const { srand((unsigned int) time(nullptr)); }
-
-void App::initSdl() {
+void Sdl::initSdl() {
     int result = SDL_Init(SDL_INIT_VIDEO);
     const int SUCCESS = 0;
 
@@ -30,7 +26,7 @@ void App::initSdl() {
     }
 }
 
-void App::initSdlImage() {
+void Sdl::initSdlImage() {
     int imgFlags = IMG_INIT_PNG;
     const int FAILURE = 0;
     if ((IMG_Init(imgFlags) & imgFlags) == FAILURE) {
@@ -38,7 +34,7 @@ void App::initSdlImage() {
     }
 }
 
-void App::initSdlTtf() const {
+void Sdl::initSdlTtf() const {
     int result = TTF_Init();
     const int SUCCESS = 0;
 
@@ -47,13 +43,13 @@ void App::initSdlTtf() const {
     }
 }
 
-void App::setTextureFilteringToLinear() {
+void Sdl::setTextureFilteringToLinear() {
     if (SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1") == SDL_FALSE) {
         printf("Warning: Linear tetromino_texture filtering not enabled!");
     }
 }
 
-App::~App() {
+Sdl::~Sdl() {
     TTF_Quit();
     IMG_Quit();
     SDL_Quit();

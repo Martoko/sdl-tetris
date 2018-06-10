@@ -9,7 +9,7 @@
 #include "sdl/Timer.hpp"
 #include "Tetromino.hpp"
 #include "sdl/Font.hpp"
-#include "engine/Resources.hpp"
+#include "sdl/Renderer.hpp"
 
 const int BOARD_WIDTH = 264;
 const int BOARD_HEIGHT = 402;
@@ -22,26 +22,30 @@ class TetrisWindow {
 
     SDL::Window window = SDL::Window("Tetris", BOARD_WIDTH, BOARD_HEIGHT);
 
+    SDL::Renderer renderer = SDL::Renderer(window);
+
+    SDL::Texture tetromino_texture = renderer.load("resources/images/tetromino.png");
+    SDL::Texture board_texture = renderer.load("resources/images/board.png");
+    SDL::Texture tetromino_ghost_texture = renderer.load("resources/images/tetromino_ghost.png");
+    SDL::Texture dim_screen_texture = renderer.load("resources/images/dim_screen.png");
+    SDL::Texture instructions_texture = renderer.load("resources/images/instructions.png");
+
     SDL::Texture next_text_texture =
-            SDL::Texture::fromText(window.getRenderer(), ubuntu_regular_20, "next");
+            renderer.createText(ubuntu_regular_20, "next");
     SDL::Texture hold_text_texture =
-            SDL::Texture::fromText(window.getRenderer(), ubuntu_regular_20, "hold");
+            renderer.createText(ubuntu_regular_20, "hold");
     SDL::Texture score_text_texture =
-            SDL::Texture::fromText(window.getRenderer(), ubuntu_regular_20, "score");
+            renderer.createText(ubuntu_regular_20, "score");
     SDL::Texture level_text_texture =
-            SDL::Texture::fromText(window.getRenderer(), ubuntu_regular_20, "level");
+            renderer.createText(ubuntu_regular_20, "level");
     SDL::Texture pause_text_texture =
-            SDL::Texture::fromText(window.getRenderer(), ubuntu_regular_44, "PAUSED",
-                                   {255, 255, 255});
+            renderer.createText(ubuntu_regular_44, "PAUSED", {255, 255, 255});
     SDL::Texture game_over_title_text =
-            SDL::Texture::fromText(window.getRenderer(), ubuntu_regular_44, "GAME OVER",
-                                   {255, 255, 255});
+            renderer.createText(ubuntu_regular_44, "GAME OVER", {255, 255, 255});
     SDL::Texture game_over_description_text =
-            SDL::Texture::fromText(window.getRenderer(), ubuntu_regular_20, "press 'R' to restart",
-                                   {255, 255, 255});
+            renderer.createText(ubuntu_regular_20, "press 'R' to restart", {255, 255, 255});
 
 public:
-    TetrisWindow();
 
     void renderToScreen();
 
