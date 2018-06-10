@@ -6,7 +6,7 @@
 
 namespace SDL {
 
-    class Font final {
+    class Font {
         std::unique_ptr<TTF_Font, decltype(&TTF_CloseFont)> sdl_ttf_font;
 
     public:

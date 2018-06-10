@@ -10,7 +10,7 @@ namespace SDL {
 
     typedef std::unique_ptr<SDL_Renderer, decltype(&SDL_DestroyRenderer)> SdlRendererPointer;
 
-    class Renderer final {
+    class Renderer {
         SdlRendererPointer sdl_renderer;
 
     public:

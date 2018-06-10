@@ -1,10 +1,11 @@
 #pragma once
 
 #include "../language/NonCopyableMoveable.hpp"
+#include "Window.hpp"
 
 namespace SDL {
 
-    class Sdl final : NonCopyableMoveable {
+    class Sdl : NonCopyableMoveable {
     public:
         Sdl();
 

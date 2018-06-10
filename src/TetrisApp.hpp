@@ -5,7 +5,7 @@
 #include "TetrominoBag.hpp"
 #include "sdl/Sdl.hpp"
 
-class TetrisApp final {
+class TetrisApp {
     SDL::Sdl sdl;
 
     bool should_quit = false;

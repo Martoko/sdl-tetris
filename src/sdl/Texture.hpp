@@ -5,7 +5,7 @@
 
 namespace SDL {
 
-    class Texture final {
+    class Texture {
         std::unique_ptr<SDL_Texture, decltype(&SDL_DestroyTexture)> sdl_texture;
     public:
         int width, height;
