@@ -1,4 +1,5 @@
 #include "TetrisApp.hpp"
+#include <time.h>
 
 TetrisApp::TetrisApp() {
     seedRandomNumberGenerator();
@@ -6,7 +7,7 @@ TetrisApp::TetrisApp() {
 }
 
 void TetrisApp::seedRandomNumberGenerator() const {
-    sranddev();
+    srand(time(NULL));
 }
 
 std::unique_ptr<Tetromino> TetrisApp::newTetrominoFromBag() {
